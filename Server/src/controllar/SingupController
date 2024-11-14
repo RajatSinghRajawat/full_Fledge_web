@@ -1,0 +1,102 @@
+const UserDetails = require('../models/signupModel');
+const { z } = require('zod')
+const bcrypt = require('bcrypt')
+const saltRounds = 10;
+const jwt = require('jsonwebtoken')
+
+const signInSchema = z.object({
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(6, "Password must be at least 6 characters long"),
+});
+
+
+
+const userRegister = async (req, res) => {
+    try {
+        const { firstName, lastName, email, password, gender, phoneNumber, address } = req.body;
+
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        const token = jwt.sign(
+            { email },
+            'secret',
+            { expiresIn: '1h' }
+        );
+
+        const register_user = await UserDetails.create({
+            firstName,
+            lastName,
+            email,
+            password: hashedPassword,
+            gender,
+            phoneNumber,
+            address: {
+                street: address.street,
+                city: address.city,
+                state: address.state,
+                postalCode: address.postalCode,
+                country: address.country
+            },
+            token
+        });
+
+        res.status(201).send({ status: "true", user: register_user });
+    } catch (error) {
+        res.status(500).send({ status: "false", message: error.message });
+    }
+};
+
+const userLogin = async (req, res) => {
+
+    try {
+        const { email, password } = req.body
+        const a = await signInSchema.safeParse(req.body);
+        if (!a.success) {
+            res.status(500).send({ Message: "please write in proper way" })
+        }
+        const user = await UserDetails.findOne({ email });
+        // console.log(user)
+        if (!user) {
+            return res.status(404).json({ status: "false", error: "User not found" });
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ status: " false", error: "Invalid password" });
+        } else {
+
+            res.status(200).json({ status: "true", message: "Login Successful" });
+        }
+
+
+
+
+    } catch (error) {
+        res.status(500).json({ status: false, error: error.message });
+    }
+};
+const userLogout = async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const Cheackuser = await UserDetails.findOne({ email })
+        if (!Cheackuser) {
+            return res.json({ status: false, error: "Invalid Email" });
+        }
+        const user = await UserDetails.findOneAndUpdate(
+            { email },
+            { token: null }
+        );
+        if (!user) {
+            return res.status(404).json({ status: false, error: "User not found" });
+        }
+
+        res.status(200).json({ status: true, message: "Logout successful" });
+    } catch (error) {
+        res.status(500).json({ status: false, error: error.message });
+    }
+};
+
+module.exports = {
+    userRegister, userLogin, userLogout
+}
