@@ -1,5 +1,4 @@
 import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
-
 // src/redux/actions/productActions.js
 export const FETCH_PRODUCT_SUCCESS = 'FETCH_PRODUCT_SUCCESS';
 export const FETCH_PRODUCT_ERROR = 'FETCH_PRODUCT_ERROR';
@@ -40,8 +39,6 @@ export const getProduct = createAsyncThunk(
       };
 
       const response = await fetch(`http://localhost:5000/getProduct?productName=${data}`, requestOptions);
-      // const response = await fetch(`http://localhost:5000/getProduct`, requestOptions);
-      // const response = await fetch(`http://localhost:5000/getProduct`, requestOptions);
       const result = await response.json();
       console.log('result',result)
       return result

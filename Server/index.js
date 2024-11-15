@@ -8,16 +8,12 @@ app.use(cors({origin:"*"}))
 
 
 
-
-
 app.use(express.json())
 app.use(express.static("public/Uploads"))
 app.use(router)
 
 
 //RATELIMIT***************
-
-
 const limiter  = ratelimit({
     windowMs: 60*1000, //1 minute window
     max:100, //limit each IP to 100 requestes per windowMs

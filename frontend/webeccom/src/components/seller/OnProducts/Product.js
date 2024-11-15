@@ -265,7 +265,10 @@ const Product = () => {
               {newFilterProdcut?.map((product, index) => (
                 <div
                   key={product._id}
-                  onClick={() => navigate(`onedata/${product._id}`)}
+                  onClick={() => {
+                    navigate(`/onedata/${product._id}`)
+                    window.scrollTo(0, 0)
+                  }}
                   className="bg-white  shadow-md p-2 w-72 h-[100%] min-w-[300px]" // Set fixed width and background color
                 >
                   <img
