@@ -1,7 +1,7 @@
 const express = require('express')
 const { addProduct, getProduct, getProductID, getProductsByCategory } = require('../controllar/allProductsController')
 
-const multer = require('multer')
+// const multer = require('multer')
 const upload = require('../../multer')
 const addcart = require('../controllar/cartControllar')
 const { userLogin } = require('../controllar/SingupController')

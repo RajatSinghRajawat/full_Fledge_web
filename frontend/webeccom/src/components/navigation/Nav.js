@@ -167,7 +167,7 @@ const Nav = () => {
               </span>
             </a>
             {/* <a href="#" className="hidden lg:block">Returns & Orders</a> */}
-            <a href="#" className="flex items-center me-3 " onClick={handleCartToggle}>
+            <a href="#" className="flex items-center me-3 ">
               {/* <i className="fa-solid fa-cart-shopping fs-4"></i> */}
               <Badge>
                 <Typography sx={{ fontSize: 'xl' }}>🛒</Typography>
@@ -221,25 +221,6 @@ const Nav = () => {
             <a href="#" className="block py-2 bg-yellow-500 text-black text-center rounded">Sign Up</a>
           </div>
         )}
-
-        <div
-          className={`offcanvas offcanvas-end ${showCart ? 'show' : ''}`}
-          tabIndex="-1"
-          style={{ display: showCart ? 'block' : 'none' }}
-        >
-          <div className="offcanvas-header">
-            <h5 className="offcanvas-title">Shopping Cart</h5>
-            <button
-              type="button"
-              className="btn-close text-reset"
-              aria-label="Close"
-              onClick={handleCartToggle}
-            ></button>
-          </div>
-          <div className="offcanvas-body">
-            {/* Cart items would go here */}
-          </div>
-        </div>
       </div>
       <Categories/>
     </>

@@ -40,7 +40,7 @@ export const getProduct = createAsyncThunk(
 
       const response = await fetch(`http://localhost:5000/getProduct?productName=${data}`, requestOptions);
       const result = await response.json();
-      console.log('result',result)
+      console.log('result ooooooooooooooooooooo',result)
       return result
       
     } catch (error) {

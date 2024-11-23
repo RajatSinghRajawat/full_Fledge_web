@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const productModel = require('../models/allProductsModel');
-const Gallery = require('../models/galleryModel');
+
 const Category = require('../models/catgories');
 
 
@@ -26,14 +26,13 @@ const addProduct = async (req, res) => {
         var baseUrl = `http://${req.get("host")}`;
         baseUrl += "/Uploads/" + req.files[0].filename;
 
-        const { productName, description, discount, price, reducedMRP, size, color, specialization, soldBy, leadTime, responseRate, features, Categories_id, Id, name } = req.body;
+        const { productName, description, discount, price, reducedMRP, size, color, specialization, soldBy, leadTime, responseRate, features , Id, name } = req.body;
 
         const uniqueId = new mongoose.Types.ObjectId().toString();
         const categorie = await Category.create({
             Id,
             name
         });
-
 
         const newProduct = await productModel.create({
             image: imageArray,
@@ -53,15 +52,8 @@ const addProduct = async (req, res) => {
             Categories_id: Id
         });
 
-
-
-
-
         // console.log(newProduct, "mm")
         res.status(201).json({ status: "001", message: "Product added successfully", product: newProduct, categorie });
-
-
-
 
     } catch (error) {
         console.error("Error adding product:", error);

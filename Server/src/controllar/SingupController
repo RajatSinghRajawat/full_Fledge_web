@@ -13,7 +13,7 @@ const signInSchema = z.object({
 
 const userRegister = async (req, res) => {
     try {
-        const { firstName, lastName, email, password, gender, phoneNumber, address } = req.body;
+        const { firstName, email, password} = req.body;
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -25,18 +25,8 @@ const userRegister = async (req, res) => {
 
         const register_user = await UserDetails.create({
             firstName,
-            lastName,
             email,
             password: hashedPassword,
-            gender,
-            phoneNumber,
-            address: {
-                street: address.street,
-                city: address.city,
-                state: address.state,
-                postalCode: address.postalCode,
-                country: address.country
-            },
             token
         });
 

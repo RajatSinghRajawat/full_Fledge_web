@@ -312,23 +312,7 @@ const Register = () => {
                 style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
               />
             </Grid>
-            <Grid item xs={6}>
-              <input
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                placeholder="Last Name"
-                style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
-              />
-            </Grid>
           </Grid>
-
-          <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-            style={{ width: '100%', padding: '10px', marginTop: '10px' }}
-          />
-
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -336,17 +320,7 @@ const Register = () => {
             style={{ width: '100%', padding: '10px', marginTop: '10px' }}
           />
 
-          <select
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-            style={{ width: '100%', padding: '10px', marginTop: '10px' }}
-          >
-            <option value="" disabled>Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-
+        
           <input
             value={password}
             onChange={(e) => setPassword(e.target.value)}

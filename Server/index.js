@@ -25,7 +25,7 @@ app.use(limiter)
 
 
 
-connectionDatabase("mongodb://localhost:27017/myEccomercedatabase").then((value)=>{
+connectionDatabase("mongodb://127.0.0.1:27017/myEccomercedatabase").then((value)=>{
     console.log('connect with mongodb')
 }).catch((error)=>{
         console.log(error);
@@ -35,5 +35,5 @@ connectionDatabase("mongodb://localhost:27017/myEccomercedatabase").then((value)
 
 
 app.listen(5000,()=>{
-    console.log('connect with server on port 8080')
+    console.log('connect with server on port 5000')
 })

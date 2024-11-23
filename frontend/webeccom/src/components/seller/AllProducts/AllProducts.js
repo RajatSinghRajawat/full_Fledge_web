@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, CardMedia, Typography, Button, Box, IconButton } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import Nav from '../../navigation/Nav';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import './product.css'
 import { getProduct } from '../../actions/productActions';
-import Carousel from './Carousel';
-import Allpros from './Allpros';
-// import { Carousel } from 'react-bootstrap';
 
 const AllProducts = () => {
   const navigate = useNavigate();
@@ -55,11 +50,6 @@ const AllProducts = () => {
   return (
     <>
       <Nav />
-{/* 
-      <div className='mt-10'>
-
-        <Allpros/>
-      </div> */}
 
       <div>
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-10 bg-blue-200 h-auto lg:h-[90vh] p-6">
@@ -99,22 +89,6 @@ const AllProducts = () => {
           </div>
         </div>
 
-        {/* <Carousel>
-          <Carousel.Item>
-            <img
-              className="carousel-image"
-              src="https://graphicsfamily.com/wp-content/uploads/edd/2021/10/iPhone-Website-Ad-Banner-Design-1180x664.jpg"
-              alt="First slide"
-            />
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="carousel-image"
-              src="https://wallpaperaccess.com/full/1190727.jpg"
-              alt="Second slide"
-            />
-          </Carousel.Item>
-        </Carousel> */}
       </div>
       <div className="container rounded-sm  p-3 mt-4 bg-orange-400 m-5  w-auto">
         <h2 className="text-2xl font-bold mb-4">Blockbuster deals with exchange</h2>
