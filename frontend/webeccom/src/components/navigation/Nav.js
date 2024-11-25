@@ -11,6 +11,7 @@ import { styled } from '@mui/joy';
 import SvgIcon from '@mui/joy/SvgIcon';
 import { IoCloudUploadSharp } from "react-icons/io5";
 import Categories from './Categories';
+import { NavLink } from 'react-router-dom';
 
 
 const Nav = () => {
@@ -74,11 +75,11 @@ const Nav = () => {
           {/* Logo */}
           <div className="flex items-center">
             <a href="#">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
-                alt="Amazon Logo"
-                width="100"
-              />
+              <NavLink to='/'>
+
+
+             <h6 className='text-light fw-bold p-2'>EcomZone</h6>
+              </NavLink>
             </a>
           </div>
 
