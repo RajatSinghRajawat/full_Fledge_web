@@ -9,6 +9,7 @@ const { userLogout } = require('../controllar/SingupController')
 const { verify } = require('jsonwebtoken')
 const verification = require('../midddleware/Usermiddleware')
 const { addCart, getCart } = require('../controllar/cartControllar')
+const { addProfile, getAllProfiles } = require('../controllar/ProfileCntroller')
 
 const router = express.Router()
 
@@ -34,6 +35,12 @@ router.post('/LogOutUser' ,verification,  userLogout)
 router.post('/addtocart' ,  addCart )
 router.get('/getcart' , getCart)
 
+
+//profile
+
+
+router.post('/addprofile', upload.array("files") ,addProfile )
+router.get('/getprofile' , getAllProfiles )
 
 module.exports = router
 

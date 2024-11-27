@@ -42,6 +42,19 @@ const addCart = async (req, res) => {
       return total + itemPrice * item.quantity;
     }, 0);
 
+
+    //     //cart.Products.reduce:
+    // Ye method array ke sabhi products ko iterate karta hai aur ek single value(total price) calculate karta hai.
+
+    //       item.productId.toString() === productId:
+    // Ye check karta hai ki jo current item hai uska productId match karta hai kya diya gaya productId ke saath.Agar match karta hai, toh uski updated price le lega; agar nahi, toh 0.
+
+    //     itemPrice * item.quantity:
+    // Har item ki total price calculate karta hai(price × quantity).
+
+    //       total:
+    // Ye sabhi products ka total price maintain karta hai aur reduce ke har iteration me update hota hai.
+
     await cart.save();
 
     res.status(200).json({
@@ -54,13 +67,13 @@ const addCart = async (req, res) => {
 };
 
 const getCart = async (req, res) => {
-  const userId = req.params;
-  // console.log(userId);
-  
+  const userId = req.query.userId;
+  console.log(userId)
+
   try {
-    const cart = await cartModel.findOne({ userId }).populate('products.productId');
-    // console.log(cart);
-    
+    const cart = await cartModel.findOne({userId}).populate('products.productId');
+    // const cart = await cartModel.findOne().populate('products.productId');
+
     if (!cart) {
       return res.status(404).json({ message: 'Cart not found' });
     }
@@ -69,6 +82,7 @@ const getCart = async (req, res) => {
       cart,
     });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: 'Error retrieving cart', error });
   }
 };

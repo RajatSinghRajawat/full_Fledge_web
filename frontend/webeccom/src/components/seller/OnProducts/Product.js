@@ -185,7 +185,7 @@ const Product = () => {
                     enlargedImageContainerStyle: { zIndex: 10 },
                     enlargedImageContainerDimensions: {
                       width: '110%',
-                      height: '120%',
+                      height: '10y8760%',
                     },
                   }}
                 />
