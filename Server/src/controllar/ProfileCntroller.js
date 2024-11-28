@@ -4,39 +4,42 @@ const ProfileModel = require("../models/ProfileModal");
 
 
 const addProfile = async (req, res) => {
-    console.log(req.body)
-    console.log(req.files)
-    // try {
+  
+    try {
 
-    //     let profileImageArray = req.files.map((file) => file.filename);
-    //     console.log(profileImageArray, "aray");
+        let profileImageArray = req.files.map((file) => file.filename);
+        // console.log(profileImageArray, "aray");
+        console.log(req.body, "aray");
 
-    //     // var baseUrl = `http://${req.get("host")}`;
-    //     // baseUrl += "/Uploads/" + req.files[0].filename;
-
-
-    //     const { firstName, profilePicture, phone, gender, dateOfBirth, address } = req.body
+        // var baseUrl = `http://${req.get("host")}`;
+        // baseUrl += "/Uploads/" + req.files[0].filename;
 
 
-    //     const addProfile = await ProfileModel.create({
-    //         firstName,
-    //         profilePicture: profileImageArray ,
-    //         phone, gender, dateOfBirth, address
-    //     });
-    //     await addProfile.save();
+        const { firstName   , phone, gender, dateOfBirth, address } = req.body
+        console.log(req.user , "user")
 
-    //     res.send({ message: "Profile Deatails added sucessfully", addProfile })
+        const date = new Date(dateOfBirth);
+        console.log(date ,"dateeeee")
+        const addProfile = await ProfileModel.create({
+            firstName,
+            profilePicture: profileImageArray ,
+            phone, gender, dateOfBirth:date, address
+        });
+        await addProfile.save();
 
-    // } catch (error) {
-    //     console.log(error);
+        res.send({ message: "Profile Deatails added sucessfully", addProfile })
 
-    // }
+    } catch (error) {
+        console.log(error);
+
+    }
 };
 
 
 
 const getAllProfiles = async (req, res) => {
     try {
+
         const profiles = await ProfileModel.find().populate('firstName');
         res.status(200).json({ message: 'Profiles retrieved successfully', data: profiles });
     } catch (error) {

@@ -2,13 +2,13 @@ const mongoose = require('mongoose')
 
 
 const ProfileSchema = new mongoose.Schema({
-    firstName: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserDetailsSignup',
     },
 
     profilePicture: {
-        type: String,
+        type: Array,
         default: 'https://example.com/default-profile.png',
     },
     phone: {

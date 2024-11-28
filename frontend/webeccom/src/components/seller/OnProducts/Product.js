@@ -6,6 +6,9 @@ import { PiGreaterThan } from 'react-icons/pi';
 import ReactImageMagnify from 'react-image-magnify';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../../actions/productActions';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
 
 const Product = () => {
   const { userId } = useParams();
@@ -82,7 +85,13 @@ const Product = () => {
   };
 
   if (!productData) {
-    return <div>Loading...</div>;
+    return <div className='d-flex justify-between align-middle'>
+
+<h1>loadin...</h1>
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress />
+      </Box>
+    </div>;
   }
 
   const {
@@ -148,50 +157,50 @@ const Product = () => {
                   />
                 </div>
               </div> */}
-               <div>
-            <div className="flex gap-4">
-              {/* Thumbnail Images */}
-              <div className="space-y-2">
-                {image?.map((img, index) => (
-                  <div
-                    key={index}
-                    className={`border ${mouseImage === index
-                      ? 'border-blue-500'
-                      : 'border-gray-300'
-                      } rounded-md cursor-pointer`}
-                    onMouseEnter={() => setMouseImage(index)}
-                  >
-                    <img
-                      src={`http://localhost:5000/${img}`}
-                      alt={`product_img_${index}`}
-                      className="w-16 h-16 object-cover rounded-md"
+              <div>
+                <div className="flex gap-4">
+                  {/* Thumbnail Images */}
+                  <div className="space-y-2">
+                    {image?.map((img, index) => (
+                      <div
+                        key={index}
+                        className={`border ${mouseImage === index
+                          ? 'border-blue-500'
+                          : 'border-gray-300'
+                          } rounded-md cursor-pointer`}
+                        onMouseEnter={() => setMouseImage(index)}
+                      >
+                        <img
+                          src={`http://localhost:5000/${img}`}
+                          alt={`product_img_${index}`}
+                          className="w-16 h-16 object-cover rounded-md"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="w-full h-96 relative">
+                    <ReactImageMagnify
+                      {...{
+                        smallImage: {
+                          alt: productName,
+                          isFluidWidth: true,
+                          src: `http://localhost:5000/${image[mouseImage]}`,
+                        },
+                        largeImage: {
+                          src: `http://localhost:5000/${image[mouseImage]}`,
+                          width: 1200,
+                          height: 700,
+                        },
+                        enlargedImageContainerStyle: { zIndex: 10 },
+                        enlargedImageContainerDimensions: {
+                          width: '110%',
+                          height: '10y8760%',
+                        },
+                      }}
                     />
                   </div>
-                ))}
+                </div>
               </div>
-              <div className="w-full h-96 relative">
-                <ReactImageMagnify
-                  {...{
-                    smallImage: {
-                      alt: productName,
-                      isFluidWidth: true,
-                      src: `http://localhost:5000/${image[mouseImage]}`,
-                    },
-                    largeImage: {
-                      src: `http://localhost:5000/${image[mouseImage]}`,
-                      width: 1200,
-                      height: 700,
-                    },
-                    enlargedImageContainerStyle: { zIndex: 10 },
-                    enlargedImageContainerDimensions: {
-                      width: '110%',
-                      height: '10y8760%',
-                    },
-                  }}
-                />
-              </div>
-            </div>
-          </div>
             </div>
 
           </div>
@@ -304,7 +313,7 @@ const Product = () => {
 
           <div className="container rounded-sm  p-3 mt-4">
             <h2 className="text-2xl font-bold mb-4">Blockbuster deals with exchange</h2>
-            <div  className=" grid grid-cols-5 gap-6  pb-3"
+            <div className=" grid grid-cols-5 gap-6  pb-3"
             >
               {newFilterProdcut?.map((product, index) => (
                 <div
@@ -340,7 +349,7 @@ const Product = () => {
             </div>
           </div>
 
-          
+
 
         </div>
       </div>

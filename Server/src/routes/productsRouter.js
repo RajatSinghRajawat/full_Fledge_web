@@ -39,8 +39,8 @@ router.get('/getcart' , getCart)
 //profile
 
 
-router.post('/addprofile', upload.array("files") ,addProfile )
-router.get('/getprofile' , getAllProfiles )
+router.post('/addprofile', verification,upload.array("files") ,addProfile )
+router.get('/getprofile' , verification, getAllProfiles )
 
 module.exports = router
 
