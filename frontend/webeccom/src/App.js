@@ -3,7 +3,6 @@ import React from 'react'
 import {BrowserRouter, Routes, Route } from 'react-router-dom';
 import Product from './components/seller/OnProducts/Product';
 import AllProducts from './components/seller/AllProducts/AllProducts.js';
-import Nav from './components/navigation/Nav'
 import Admin from './components/admin/Admin.js';
 
 

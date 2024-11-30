@@ -69,10 +69,9 @@ const Product = () => {
   }, [userId, id]);
 
   useEffect(() => {
-
     dispatch(getProduct(""));
-
   }, [])
+
 
   const [quantity, setQuantity] = useState(1);
 
@@ -87,7 +86,7 @@ const Product = () => {
   if (!productData) {
     return <div className='d-flex justify-between align-middle'>
 
-<h1>loadin...</h1>
+      <h1>loading...</h1>
       <Box sx={{ display: 'flex' }}>
         <CircularProgress />
       </Box>
@@ -194,7 +193,7 @@ const Product = () => {
                         enlargedImageContainerStyle: { zIndex: 10 },
                         enlargedImageContainerDimensions: {
                           width: '110%',
-                          height: '10y8760%',
+                          height: '100%',
                         },
                       }}
                     />

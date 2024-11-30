@@ -13,7 +13,7 @@ const signInSchema = z.object({
 
 const userRegister = async (req, res) => {
     try {
-        const { firstName, email, password} = req.body;
+        const { firstName, email, password } = req.body;
 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -35,34 +35,42 @@ const userRegister = async (req, res) => {
         res.status(500).send({ status: "false", message: error.message });
     }
 };
-
 const userLogin = async (req, res) => {
-
     try {
-        const { email, password } = req.body
-        const a = await signInSchema.safeParse(req.body);
-        if (!a.success) {
-            res.status(500).send({ Message: "please write in proper way" })
+        const { email, password } = req.body;
+        const validation = signInSchema.safeParse(req.body);
+        if (!validation.success) {
+            return res.status(400).send({ status: "false", message: "Invalid input format" });
         }
         const user = await UserDetails.findOne({ email });
-        // console.log(user)
         if (!user) {
-            return res.status(404).json({ status: "false", error: "User not found" });
+            return res.status(404).json({ status: "false", message: "User not found" });
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ status: " false", error: "Invalid password" });
-        } else {
+            return res.status(401).json({ status: "false", message: "Invalid password" });
+        }
+        const payload = { email: user.email };
+        const token = jwt.sign(payload, 'secret', { expiresIn: '1h' });
 
-            res.status(200).json({ status: "true", message: "Login Successful" });
+        const tokenUpdate = await UserDetails.updateOne({ email }, { token });
+        if (!tokenUpdate.modifiedCount) {
+            return res.status(500).json({ status: "002", message: "Failed to update token" });
         }
 
-
-
-
+        return res.status(200).json({
+            status: "001",
+            message: "Login successful",
+            token,
+            user: {
+                id: user._id,
+                firstName: user.firstName,
+                email: user.email,
+            },
+        });
     } catch (error) {
-        res.status(500).json({ status: false, error: error.message });
+        return res.status(500).json({ status: "false", message: "Internal server error", error: error.message });
     }
 };
 const userLogout = async (req, res) => {
