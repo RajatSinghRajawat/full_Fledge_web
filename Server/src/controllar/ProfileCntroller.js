@@ -27,7 +27,7 @@ const addProfile = async (req, res) => {
         });
         await addProfile.save();
 
-        res.send({ message: "Profile Deatails added sucessfully", addProfile })
+        res.send({ message: " All Profile Deatails added sucessfully ", addProfile })
 
     } catch (error) {
         console.log(error);
