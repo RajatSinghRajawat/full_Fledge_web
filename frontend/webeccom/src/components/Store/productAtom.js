@@ -4,3 +4,8 @@ export const initialProductState = {
     error: null,
   };
   
+export const cartProducts = {
+    productData: [],
+    error: null,
+  };
+  
