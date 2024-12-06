@@ -2,9 +2,11 @@ const express = require('express');
 const connectionDatabase = require('./src/config/config');
 const router = require('./src/routes/productsRouter');
 const cors = require('cors')
+const morgan = require('morgan')
 const ratelimit = require("express-rate-limit")
 const app = express();
 app.use(cors({origin:"*"}))
+// app.use(morgan('dev'))
 
 
 
@@ -36,5 +38,5 @@ connectionDatabase("mongodb://127.0.0.1:27017/myEccomercedatabase").then((value)
 
 
 app.listen(5000,()=>{
-    console.log('connect with server on port 5000')
+    console.log('connect with server on port 8080');
 })

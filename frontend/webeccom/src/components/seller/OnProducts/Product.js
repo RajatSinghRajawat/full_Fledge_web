@@ -5,7 +5,7 @@ import '../OnProducts/onproduct.css';
 import { PiGreaterThan } from 'react-icons/pi';
 import ReactImageMagnify from 'react-image-magnify';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProduct } from '../../actions/productActions';
+import { addCarts, getProduct } from '../../actions/productActions';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
@@ -23,7 +23,7 @@ const Product = () => {
 
 
   const { value } = useSelector((state) => {
-    // console.log('hello')
+
     return state.MYproduct
   })
 
@@ -107,7 +107,10 @@ const Product = () => {
     leadTime,
     responseRate,
     features,
+    _id
   } = productData;
+
+  // console.log(_id,"_id*******************************")
 
 
 
@@ -201,7 +204,6 @@ const Product = () => {
                 </div>
               </div>
             </div>
-
           </div>
 
           <div className="col-lg-6">
@@ -277,7 +279,7 @@ const Product = () => {
                 <div className="row Products-action-buttons">
                   <div className="col-6">
                     {/* <button className="btn btn-outline-danger w-100">Add To Cart</button> */}
-                    <button className="btn btn-outline-danger w-100 ">Add To Cart</button>
+                    <button className="btn btn-outline-danger w-100 " onClick={()=>{dispatch(addCarts(_id))}}>Add To Cart</button>
                   </div>
                   <div className="col-6">
                     <button className="btn btn-danger w-100">Send Inquiry</button>

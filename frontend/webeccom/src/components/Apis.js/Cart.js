@@ -1,11 +1,11 @@
-const addCart = () => {
+export const addCart = (id) => {
     try {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
         const raw = JSON.stringify({
             "userId": "67441031faea89f5e1d847f2",
-            "productId": "6741e1db8130ec547f23347b",
+            "productId": id,
             "quantity": 2
         });
 
@@ -23,6 +23,23 @@ const addCart = () => {
 
     } catch (error) {
         console.log(error);
+        
+    }
+}
+
+
+ export const getCart = ()=>{
+    try {
+        const requestOptions = {
+            method: "GET",
+            redirect: "follow"
+          };
+          
+          fetch("http://localhost:5000/getcart?userId=67441031faea89f5e1d847f2", requestOptions)
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.error(error));
+    } catch (error) {
         
     }
 }

@@ -15,8 +15,6 @@ const Category = require('../models/catgories');
 //     }
 // }
 
-
-
 const addProduct = async (req, res) => {
     try {
         // console.log(req.body, "files");
@@ -83,7 +81,6 @@ const addProduct = async (req, res) => {
 //         });
 //     }
 // };
-
 const getProduct = async (req, res) => {
     try {
 
@@ -104,7 +101,6 @@ const getProduct = async (req, res) => {
         res.status(500).json({ status: "002", message: 'Failed to fetch products', error: error.message });
     }
 }
-
 const getProductID = async (req, res) => {
     const userid = req.params.id
     const all = await productModel.findById(userid)
@@ -112,7 +108,6 @@ const getProductID = async (req, res) => {
     res.send({ status: "001", message: "get One product", all })
 
 }
-
 const getProductsByCategory = async (req, res) => {
     try {
         const { Categories_id } = req.params;
@@ -138,9 +133,5 @@ const getProductsByCategory = async (req, res) => {
         });
     }
 };
-
-
-
-
 
 module.exports = { addProduct, getProduct, getProductID ,getProductsByCategory }

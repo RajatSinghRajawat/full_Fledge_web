@@ -12,6 +12,8 @@ import SvgIcon from '@mui/joy/SvgIcon';
 import { IoCloudUploadSharp } from "react-icons/io5";
 import Categories from './Categories';
 import { NavLink } from 'react-router-dom';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import Cart from './Cart';
 
 
 const Nav = () => {
@@ -31,7 +33,7 @@ const Nav = () => {
   };
 
   const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen); // Toggle menu on mobile
+    setIsMenuOpen(!isMenuOpen);
   };
   const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
@@ -60,29 +62,31 @@ const Nav = () => {
     pb: 3,
   };
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
   const handleOpen = () => {
     setOpen(true);
+
   };
   const handleClose = () => {
     setOpen(false);
   };
 
+  const handleCloseCart = () => setOpenCart(false);
+  const handleOpencart = () => setOpenCart(true);
+
   return (
     <>
       <div className="bg-gray-900">
         <nav className="container mx-auto flex items-center justify-between py-4">
-          {/* Logo */}
+
           <div className="flex items-center">
             <a href="#">
               <NavLink to='/'>
-
-
-             <h6 className='text-light fw-bold p-2'>EcomZone</h6>
+                <h6 className='text-light fw-bold p-2'>EcomZone</h6>
               </NavLink>
             </a>
           </div>
-
           <div className="hidden lg:flex flex-col text-white">
             <span>
               Deliver to <strong>Rajat</strong>
@@ -115,7 +119,7 @@ const Nav = () => {
               className="w-full p-2 border border-gray-300 focus:outline-none text-black"
             />
             <Button
-            className='fs-2'
+              className='fs-2'
               component="label"
               role={undefined}
               tabIndex={-1}
@@ -140,7 +144,7 @@ const Nav = () => {
               // }
               sx={{ color: "white", borderColor: "white" }} // Apply white color to text and border
             >
-             <IoCloudUploadSharp />
+              <IoCloudUploadSharp />
               <VisuallyHiddenInput type="file" />
             </Button>
 
@@ -150,13 +154,13 @@ const Nav = () => {
               <i className="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
-
+{/* 
           <button
             className="lg:hidden text-white"
             onClick={handleMenuToggle}
           >
             <i className="fa fa-bars fa-lg"></i>
-          </button>
+          </button> */}
 
           <div className="hidden lg:flex items-center space-x-6 text-white">
             <a href="#" className="hidden lg:block">EN</a>
@@ -168,7 +172,7 @@ const Nav = () => {
               </span>
             </a>
             {/* <a href="#" className="hidden lg:block">Returns & Orders</a> */}
-            <a href="#" className="flex items-center me-3 ">
+            <a onClick={handleOpencart} href="#" className="flex items-center me-3 ">
               {/* <i className="fa-solid fa-cart-shopping fs-4"></i> */}
               <Badge>
                 <Typography sx={{ fontSize: 'xl' }}>🛒</Typography>
@@ -182,8 +186,8 @@ const Nav = () => {
           </div>
 
         </nav>
-        {/* <Button onClick={handleOpen}>Open Child Modal</Button> */}
-        <Modal style={{zIndex:"9999"}}
+        {/* ////////////////////registermodal//////////////////// */}
+        <Modal style={{ zIndex: "9999" }}
           open={open}
           onClose={handleClose}
           aria-labelledby="child-modal-title"
@@ -199,6 +203,33 @@ const Nav = () => {
             <Register />
           </Box>
         </Modal>
+        {/* ////////////////////registermodal//////////////////// */}
+
+
+
+
+        <Offcanvas  show={openCart} onHide={handleCloseCart}>
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            Some text as placeholder. In real life you can have the elements you
+            have chosen. Like, text, images, lists, etc.
+
+            <Cart/>
+          </Offcanvas.Body>
+        </Offcanvas>
+
+
+
+
+
+
+
+
+
+
+
 
 
         {isMenuOpen && (
@@ -223,7 +254,8 @@ const Nav = () => {
           </div>
         )}
       </div>
-      <Categories/>
+
+      <Categories />
     </>
   );
 };

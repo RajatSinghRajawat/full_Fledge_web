@@ -49,8 +49,10 @@ export const productSlice = createSlice({
 
     })
     builder.addCase(getProduct.rejected,(state,action)=>{
+      console.log("********************************************************");
       state.loading = false;
       state.error = action.message.error;
+      
 
     })
   }
