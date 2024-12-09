@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import './product.css'
 import { getProduct } from '../../actions/productActions';
+import Poster from '../Posters/Poster';
 
 const AllProducts = () => {
   const navigate = useNavigate();
@@ -52,7 +53,9 @@ const AllProducts = () => {
       <Nav />
 
       <div>
-        <div className="grid lg:grid-cols-2 grid-cols-1 gap-10 bg-blue-200 h-auto lg:h-[90vh] p-6">
+
+        <Poster />
+        {/* <div className="grid lg:grid-cols-2 grid-cols-1 gap-10 bg-blue-200 h-auto lg:h-[90vh] p-6">
           <div className="lg:m-24 m-8 flex flex-col justify-center">
 
             <div className="mb-4">
@@ -87,7 +90,7 @@ const AllProducts = () => {
               alt="Discount Products"
             />
           </div>
-        </div>
+        </div> */}
 
       </div>
       <div className="container rounded-sm  p-3 mt-4 bg-orange-400 m-5  w-auto">

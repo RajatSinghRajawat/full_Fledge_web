@@ -71,7 +71,7 @@ const getCart = async (req, res) => {
   console.log(userId)
 
   try {
-    const cart = await cartModel.findOne({userId}).populate('Products.productId');
+    const cart = await cartModel.findOne({ userId }).populate('Products.productId');
     // const cart = await cartModel.findOne().populate('products.productId');
 
     if (!cart) {
@@ -88,46 +88,43 @@ const getCart = async (req, res) => {
 };
 
 
-// const removeCart = async (req, res) => {
-//   const { productId } = req.body;
-//   const userId = req.user.id; // Extract from JWT token
+const removeCart = async (req, res) => {
+  const { productId  , userId} = req.query;
+  const id = req.params
 
-//   try {
-//     // Find user's cart
-//     let cart = await cartModel.findOne({ userId });
+  console.log(productId ,id ,  "pr")
+  try {
+    let cart = await cartModel.findOne({ userId });
 
-//     if (!cart) {
-//       return res.status(404).json({ message: 'Cart not found' });
-//     }
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
+    console.log(cart , "c")
+    const productIndex = cart.Products.findIndex(
+      (item) => item.productId.toString() === productId
+    );
+    console.log(productIndex , "pr")
 
-//     // Find the product in the cart
-//     const productIndex = cart.Products.findIndex(
-//       (item) => item.productId.toString() === productId
-//     );
+    if (productIndex === -1) {
+      return res.status(404).json({ message: 'Product not found in cart' });
+    }
+    cart.Products.splice(productIndex, 1);
 
-//     if (productIndex === -1) {
-//       return res.status(404).json({ message: 'Product not found in cart' });
-//     }
+    cart.totalPrice = cart.Products.reduce((total, item) => {
+      const itemPrice = item.productId.price || 0;
+      return total + itemPrice * item.quantity;
+    }, 0);
 
-//     // Remove the product from the cart
-//     cart.Products.splice(productIndex, 1);
+    await cart.save();
 
-//     // Recalculate total price
-//     cart.totalPrice = cart.Products.reduce((total, item) => {
-//       const itemPrice = item.productId.price || 0;
-//       return total + itemPrice * item.quantity;
-//     }, 0);
-
-//     await cart.save();
-
-//     res.status(200).json({
-//       message: 'Product removed from cart successfully',
-//       cart,
-//     });
-//   } catch (error) {
-//     res.status(500).json({ message: 'Error removing product from cart', error });
-//   }
-// };
+    res.status(200).json({
+      message: 'Product removed from cart successfully',
+      cart,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Error removing product from cart', error });
+  }
+};
 
 
-module.exports = { addCart, getCart };
+module.exports = { addCart, getCart ,removeCart};

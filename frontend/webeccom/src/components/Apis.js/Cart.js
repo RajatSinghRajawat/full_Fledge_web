@@ -23,23 +23,41 @@ export const addCart = (id) => {
 
     } catch (error) {
         console.log(error);
-        
+
     }
 }
 
 
- export const getCart = ()=>{
+export const getCart = () => {
     try {
         const requestOptions = {
             method: "GET",
             redirect: "follow"
-          };
-          
-          fetch("http://localhost:5000/getcart?userId=67441031faea89f5e1d847f2", requestOptions)
+        };
+
+        fetch("http://localhost:5000/getcart?userId=67441031faea89f5e1d847f2", requestOptions)
             .then((response) => response.text())
             .then((result) => console.log(result))
             .catch((error) => console.error(error));
     } catch (error) {
-        
+
+    }
+}
+
+export const removeCart = () => {
+    try {
+        const requestOptions = {
+            method: "GET",
+            redirect: "follow"
+        };
+
+        fetch("http://localhost:5000/removeCart?userId=67441031faea89f5e1d847f2&productId=6741e1c58130ec547f23344e", requestOptions)
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.error(error));
+
+    } catch (error) {
+        console.log(error);
+
     }
 }

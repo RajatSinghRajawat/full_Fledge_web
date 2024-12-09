@@ -203,19 +203,16 @@ const Nav = () => {
             <Register />
           </Box>
         </Modal>
-        {/* ////////////////////registermodal//////////////////// */}
+        {/* ////////////////////cart//////////////////// */}
 
 
 
 
-        <Offcanvas  show={openCart} onHide={handleCloseCart}>
+        <Offcanvas style={{width:"500px"}} show={openCart} onHide={handleCloseCart}>
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+            <Offcanvas.Title>Carts Items</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            Some text as placeholder. In real life you can have the elements you
-            have chosen. Like, text, images, lists, etc.
-
             <Cart/>
           </Offcanvas.Body>
         </Offcanvas>
