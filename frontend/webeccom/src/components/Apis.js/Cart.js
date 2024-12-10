@@ -27,7 +27,6 @@ export const addCart = (id) => {
     }
 }
 
-
 export const getCart = () => {
     try {
         const requestOptions = {

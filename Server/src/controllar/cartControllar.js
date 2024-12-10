@@ -90,9 +90,9 @@ const getCart = async (req, res) => {
 
 const removeCart = async (req, res) => {
   const { productId  , userId} = req.query;
-  const id = req.params
+  // const id = req.params
 
-  console.log(productId ,id ,  "pr")
+  // console.log(productId ,id ,  "pr")
   try {
     let cart = await cartModel.findOne({ userId });
 
@@ -103,7 +103,7 @@ const removeCart = async (req, res) => {
     const productIndex = cart.Products.findIndex(
       (item) => item.productId.toString() === productId
     );
-    console.log(productIndex , "pr")
+    // console.log(productIndex , "pr")
 
     if (productIndex === -1) {
       return res.status(404).json({ message: 'Product not found in cart' });
