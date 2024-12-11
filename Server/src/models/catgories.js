@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-
-// Define the schema for categories
 const categorySchema = new mongoose.Schema({
   Id: {
     type: String,

@@ -4,6 +4,7 @@ import {BrowserRouter, Routes, Route } from 'react-router-dom';
 import Product from './components/seller/OnProducts/Product';
 import AllProducts from './components/seller/AllProducts/AllProducts.js';
 import Admin from './components/admin/Admin.js';
+import Footer from './components/footer/Footer.js';
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/admin" element={<Admin/>} />
         </Routes>
       </BrowserRouter>
+      <Footer/>
 
     </div>
   )
