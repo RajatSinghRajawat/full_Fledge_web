@@ -1,38 +1,35 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { removeCarts } from '../actions/productActions';
 
 const Cart = () => {
     const [cartProducts, setCartProducts] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
 
-    const getCart = async () => {
-        try {
-            const requestOptions = {
-                method: "GET",
-                redirect: "follow",
-            };
+    // const getCart = async () => {
+    //     try {
+    //         const requestOptions = {
+    //             method: "GET",
+    //             redirect: "follow",
+    //         };
 
-            const response = await fetch(
-                "http://localhost:5000/getcart?userId=67441031faea89f5e1d847f2&productId=674ecc429d27ca0d242869f5",
-                requestOptions
-            );
-            const result = await response.json();
-            console.log(result.cart, "******************** get product ***************");
-            setCartProducts(result.cart.Products || []);
-            setTotalPrice(result.cart.totalPrice || 0);
-        } catch (error) {
-            console.error("Error fetching cart:", error);
-        }
-    };
+    //         const response = await fetch(
+    //             "http://localhost:5000/getcart?userId=67441031faea89f5e1d847f2&productId=674ecc429d27ca0d242869f5",
+    //             requestOptions
+    //         );
+    //         const result = await response.json();
+    //         console.log(result.cart, "******************** get product ***************");
+    //         setCartProducts(result.cart.Products || []);
+    //         setTotalPrice(result.cart.totalPrice || 0);
+    //     } catch (error) {
+    //         console.error("Error fetching cart:", error);
+    //     }
+    // };
 
-    const handleUpdateQuantity = (productId) => {
-        console.log(`Update quantity for product: ${productId}`);
-        // Add logic to update the quantity
-    };
 
-    const handleRemoveFromCart = (productId) => {
-        console.log(`Remove product from cart: ${productId}`);
-        // Add logic to remove the product from the cart
-    };
+    const dispatch = useDispatch()
+
+    
 
     useEffect(() => {
         getCart();
@@ -62,16 +59,15 @@ const Cart = () => {
                             ₹{p.productId.price || 'N/A'}
                         </p>
                         <div className="flex gap-2">
-                            <button
+                            {/* <button
                                 className="px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all"
                                 onClick={() => handleUpdateQuantity(p.productId._id)}
                             >
                                 Update
-                            </button>
+                            </button> */}
                             <button
-                                className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition-all"
-                                onClick={() => handleRemoveFromCart(p.productId._id)}
-                            >
+                                onClick={() => { dispatch(removeCarts(p.productId._id)) }}
+                                className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition-all">
                                 Remove
                             </button>
                         </div>

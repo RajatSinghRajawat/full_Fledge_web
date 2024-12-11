@@ -46,7 +46,6 @@ export const productSlice = createSlice({
     builder.addCase(getProduct.pending,(state,action)=>{
       state.loading = true;
       state.error = null
-
     })
     builder.addCase(getProduct.rejected,(state,action)=>{
       console.log("********************************************************");

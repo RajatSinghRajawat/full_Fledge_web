@@ -68,7 +68,7 @@ const addCart = async (req, res) => {
 
 const getCart = async (req, res) => {
   const userId = req.query.userId;
-  console.log(userId)
+  // console.log(userId)
 
   try {
     const cart = await cartModel.findOne({ userId }).populate('Products.productId');

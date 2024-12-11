@@ -36,21 +36,24 @@ export const getCart = () => {
 
         fetch("http://localhost:5000/getcart?userId=67441031faea89f5e1d847f2", requestOptions)
             .then((response) => response.text())
-            .then((result) => console.log(result))
+            .then((result) =>{
+                console.log(result.cart);
+              
+            })
             .catch((error) => console.error(error));
     } catch (error) {
 
     }
 }
 
-export const removeCart = () => {
+export const removeCart = (id) => {
     try {
         const requestOptions = {
             method: "GET",
             redirect: "follow"
         };
 
-        fetch("http://localhost:5000/removeCart?userId=67441031faea89f5e1d847f2&productId=6741e1c58130ec547f23344e", requestOptions)
+        fetch(`http://localhost:5000/removeCart?userId=67441031faea89f5e1d847f2&productId=${id}`, requestOptions)
             .then((response) => response.text())
             .then((result) => console.log(result))
             .catch((error) => console.error(error));
