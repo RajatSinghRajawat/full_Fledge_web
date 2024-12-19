@@ -5,13 +5,12 @@ import Product from './components/seller/OnProducts/Product';
 import AllProducts from './components/seller/AllProducts/AllProducts.js';
 import Admin from './components/admin/Admin.js';
 import Footer from './components/footer/Footer.js';
+import Nav from './components/navigation/Nav.js';
 
 
 const App = () => {
   return (
     <div>
-
-      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AllProducts/>} />

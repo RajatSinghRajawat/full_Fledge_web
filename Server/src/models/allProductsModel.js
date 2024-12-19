@@ -8,11 +8,9 @@ const productSchema = mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
     },
     discount: {
         type: Number,
-        required: true
     },
     price: {
         type: Number,
@@ -20,7 +18,6 @@ const productSchema = mongoose.Schema({
     },
     reducedMRP: {
         type: Number,
-        required: true
     },
     image: {
         type: [],
@@ -34,15 +31,12 @@ const productSchema = mongoose.Schema({
     ,
     color: {
         type: [String],
-        required: true
     },
     size: {
         type: [String],
-        required: true
     },
     specialization: {
         type: String,
-        required: true
     },
     soldBy: {
         type: String,
@@ -50,21 +44,17 @@ const productSchema = mongoose.Schema({
     },
     leadTime: {
         type: String,
-        required: true
     },
     responseRate: {
         type: Number,
-        required: true,
         min: 0,
         max: 100
     },
     features: {
         type: [String],
-        required: true
     },
     Categories_id:{
         type:Number,
-        required: true
 
     }
     

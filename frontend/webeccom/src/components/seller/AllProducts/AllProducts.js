@@ -15,6 +15,8 @@ const AllProducts = () => {
     // console.log('hello')
     return state.MYproduct
   })
+
+  console.log("value",value)
   // console.log(value.products,'***************')
 
   // const getProducts = async () => {

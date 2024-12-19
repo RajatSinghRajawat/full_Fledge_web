@@ -64,6 +64,7 @@ const addProduct = async (req, res) => {
     }
 }
 
+
 // const getProduct = async (req, res) => {
 //     try {
 //         const product = await productModel.find(); // Fetch all products

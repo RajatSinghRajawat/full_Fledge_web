@@ -14,6 +14,8 @@ import Categories from './Categories';
 import { NavLink } from 'react-router-dom';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Cart from './Cart';
+// import SelectOptions from './SelectOptions';
+import logo2 from '../navigation/logo2.png'
 
 
 const Nav = () => {
@@ -83,7 +85,8 @@ const Nav = () => {
           <div className="flex items-center">
             <a href="#">
               <NavLink to='/'>
-                <h6 className='text-light fw-bold p-2'>EcomZone</h6>
+                {/* <h6 className='text-light fw-bold p-2'>EcomZone</h6> */}
+                <img style={{width:"80px" , height:"60px",marginRight:"10px"}} src={logo2} alt="" />
               </NavLink>
             </a>
           </div>
@@ -99,6 +102,7 @@ const Nav = () => {
               <button className="bg-gray-800 text-white px-4 py-2 rounded-l-md">
                 Electronics
               </button>
+              {/* <SelectOptions/> */}
               <ul className="absolute hidden text-gray-700 pt-1">
                 <li className="bg-gray-200 hover:bg-gray-400 px-4 py-2">
                   <a href="#/action-1">Books</a>
@@ -154,7 +158,7 @@ const Nav = () => {
               <i className="fa-solid fa-magnifying-glass"></i>
             </button>
           </div>
-{/* 
+          {/* 
           <button
             className="lg:hidden text-white"
             onClick={handleMenuToggle}
@@ -208,12 +212,12 @@ const Nav = () => {
 
 
 
-        <Offcanvas style={{width:"500px"}} show={openCart} onHide={handleCloseCart}>
+        <Offcanvas style={{ width: "500px" }} show={openCart} onHide={handleCloseCart}>
           <Offcanvas.Header closeButton>
             <Offcanvas.Title>Carts Items</Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <Cart/>
+            <Cart />
           </Offcanvas.Body>
         </Offcanvas>
 

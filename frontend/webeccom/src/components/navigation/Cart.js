@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { removeCarts } from '../actions/productActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCarts, removeCarts } from '../actions/productActions';
 
 const Cart = () => {
     const [cartProducts, setCartProducts] = useState([]);
@@ -28,18 +28,24 @@ const Cart = () => {
 
 
     const dispatch = useDispatch()
+    const {value} = useSelector(state => state.Mycart); 
+    console.log(value,"cartData")
+
+
+     useEffect(() => {
+        dispatch(getCarts());
+      }, []);
 
     
-
-    useEffect(() => {
-        getCart();
-    }, []);
+    // useEffect(() => {
+    //     getCart();
+    // }, []);
 
     return (
         <div className="p-6 bg-gray-100 min-h-screen">
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Your Cart</h1>
-            {cartProducts.length > 0 ? (
-                cartProducts.map((p) => (
+            {value.cart.Products.length > 0 ? (
+                value.cart.Products.map((p) => (
                     <div
                         key={p.productId._id}
                         className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 mb-4 flex items-center"

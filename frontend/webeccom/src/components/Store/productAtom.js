@@ -8,4 +8,9 @@ export const cartProducts = {
     productData: [],
     error: null,
   };
+
+
+  export const initailUseState = {
+    stateData:true
+  }
   

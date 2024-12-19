@@ -1,7 +1,7 @@
 // src/redux/reducers/productReducer.js
 
 import { createSlice } from '@reduxjs/toolkit';
-import { FETCH_PRODUCT_ERROR, FETCH_PRODUCT_SUCCESS, getProduct } from '../actions/productActions';
+import { FETCH_PRODUCT_ERROR, FETCH_PRODUCT_SUCCESS,  getProduct } from '../actions/productActions';
 import { initialProductState  } from '../Store/productAtom';
 
 
@@ -57,5 +57,7 @@ export const productSlice = createSlice({
   }
 
 })
+
+
 
 export default productSlice.reducer
