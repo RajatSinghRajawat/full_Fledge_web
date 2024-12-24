@@ -86,7 +86,7 @@ const Nav = () => {
             <a href="#">
               <NavLink to='/'>
                 {/* <h6 className='text-light fw-bold p-2'>EcomZone</h6> */}
-                <img style={{width:"80px" , height:"60px",marginRight:"10px"}} src={logo2} alt="" />
+                <img style={{ width: "80px", height: "60px", marginRight: "10px" }} src={logo2} alt="" />
               </NavLink>
             </a>
           </div>
@@ -191,22 +191,26 @@ const Nav = () => {
 
         </nav>
         {/* ////////////////////registermodal//////////////////// */}
-        <Modal style={{ zIndex: "9999" }}
+        <Modal
+          style={{ zIndex: "9999" }}
           open={open}
           onClose={handleClose}
           aria-labelledby="child-modal-title"
           aria-describedby="child-modal-description"
         >
-          <Box sx={{ ...style, }}>
-            {/* <h2 id="child-modal-title">Text in a child modal</h2>
-              <p id="child-modal-description">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              </p>
-              <Button onClick={handleClose}>Close Child Modal</Button> */}
-
+          <Box
+            sx={{
+              width: "70%",
+              height:"90vh",
+              margin: "2rem",
+              marginBottom:"1rem",
+              ...style, // Spread any existing styles if necessary
+            }}
+          >
             <Register />
           </Box>
         </Modal>
+
         {/* ////////////////////cart//////////////////// */}
 
 

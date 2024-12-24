@@ -11,8 +11,8 @@ const addProfile = async (req, res) => {
         // console.log(profileImageArray, "aray");
         console.log(req.body, "aray");
 
-        // var baseUrl = `http://${req.get("host")}`;
-        // baseUrl += "/Uploads/" + req.files[0].filename;
+        var baseUrl = `http://${req.get("host")}`;
+        baseUrl += "/Uploads/" + req.files[0].filename;
 
 
         const { firstName   , phone, gender, dateOfBirth, address } = req.body

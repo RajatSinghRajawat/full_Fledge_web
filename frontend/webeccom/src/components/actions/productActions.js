@@ -5,30 +5,30 @@ import { removeCart } from "../Apis.js/Cart";
 export const FETCH_PRODUCT_SUCCESS = 'FETCH_PRODUCT_SUCCESS';
 export const FETCH_PRODUCT_ERROR = 'FETCH_PRODUCT_ERROR';
 
-  // export const fetchProduct = (productName) => {
-  //   return async (dispatch) => {
-  //     try {
-  //       const requestOptions = {
-  //         method: "GET",
-  //         redirect: "follow",
-  //       };
+// export const fetchProduct = (productName) => {
+//   return async (dispatch) => {
+//     try {
+//       const requestOptions = {
+//         method: "GET",
+//         redirect: "follow",
+//       };
 
-  //       const response = await fetch(`http://localhost:5000/getProduct?productName=${productName}`, requestOptions);
-  //       const result = await response.json();
+//       const response = await fetch(`http://localhost:5000/getProduct?productName=${productName}`, requestOptions);
+//       const result = await response.json();
 
-  //       dispatch({
-  //         type: FETCH_PRODUCT_SUCCESS,
-  //         payload: result, 
-  //       });
-  //     } catch (error) {
-  //       // Dispatch error
-  //       dispatch({
-  //         type: FETCH_PRODUCT_ERROR,
-  //         payload: error.message,
-  //       });
-  //     }
-  //   };
-  // };
+//       dispatch({
+//         type: FETCH_PRODUCT_SUCCESS,
+//         payload: result, 
+//       });
+//     } catch (error) {
+//       // Dispatch error
+//       dispatch({
+//         type: FETCH_PRODUCT_ERROR,
+//         payload: error.message,
+//       });
+//     }
+//   };
+// };
 
 
 export const getProduct = createAsyncThunk(
@@ -56,16 +56,16 @@ export const getCarts = createAsyncThunk(
   'getCarts',
   async (data, { rejectWithValue }) => {
     try {
-    // getCart(data)
-    const requestOptions = {
-      method: "GET",
-      redirect: "follow"
-  };
+      // getCart(data)
+      const requestOptions = {
+        method: "GET",
+        redirect: "follow"
+      };
 
-  const responce = await fetch("http://localhost:5000/getcart?userId=67441031faea89f5e1d847f2", requestOptions)
-  const result = await responce.json();
-  console.log("get cart **********************8",result)
-  return result;
+      const responce = await fetch("http://localhost:5000/getcart?userId=67441031faea89f5e1d847f2", requestOptions)
+      const result = await responce.json();
+      console.log("get cart **********************8", result)
+      return result;
 
     } catch (error) {
       return rejectWithValue(error)
@@ -93,7 +93,7 @@ export const removeCarts = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       removeCart(data)
-      
+
 
     } catch (error) {
       return rejectWithValue(error)

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import './product.css'
 import { getProduct } from '../../actions/productActions';
 import Poster from '../Posters/Poster';
+import Register from '../register/Login/Register';
 
 const AllProducts = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const AllProducts = () => {
     return state.MYproduct
   })
 
-  console.log("value",value)
+  console.log("value", value)
   // console.log(value.products,'***************')
 
   // const getProducts = async () => {
@@ -129,24 +130,23 @@ const AllProducts = () => {
           ))}
         </div>
       </div>
-
       <div className="container mx-auto p-2 mt-4 bg-orange-400">
         <h2 className="text-2xl font-bold mb-4">Blockbuster deals with exchange</h2>
-        <div className="flex gap-6 scroll pb-3">
+        <div className="flex gap-6 scroll pb-3 h-100">
           {value.products
             ?.filter((product) => product.price <= 299)
             .map((product) => (
               <div
                 key={product._id}
                 onClick={() => navigate(`onedata/${product._id}`)}
-                className="bg-white shadow-md p-2 w-72 h-[100%] min-w-[300px]"
+                className="bg-white shadow-md p-2 w-72 h-96 min-w-[300px] flex flex-col justify-between"
               >
                 <img
                   src={`http://localhost:5000/${product.image[0]}`}
                   alt={product.productName}
-                  className="w-full h-48 object-cover mb-4"
+                  className="w-full h-40 object-cover mb-4"
                 />
-                <div className="flex items-center">
+                <div className="flex items-center mb-2">
                   <div className="bg-red-600 text-white text-xs font-semibold py-1 px-2 rounded">
                     {product.discount}% off
                   </div>
@@ -154,12 +154,12 @@ const AllProducts = () => {
                     Great Indian Festival
                   </div>
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{product.productName}</h3>
+                <h3 className="text-lg font-semibold mb-2 truncate">{product.productName}</h3>
                 <p className="text-gray-800 font-medium mb-2">
-                  ₹ {product.price}{' '} M.R.P: ₹
+                  ₹ {product.price} M.R.P: ₹
                   <span className="line-through text-gray-500">{product.reducedMRP}</span>
                 </p>
-                <p className="text-gray-600 mb-4 font-semibold">{product.description}</p>
+                <p className="text-gray-600 mb-4 font-semibold line-clamp-2">{product.description}</p>
               </div>
             ))}
         </div>
@@ -266,7 +266,7 @@ const AllProducts = () => {
         ))}
       </Box> */}
 
-
+      {/* <Register/> */}
 
 
     </>
