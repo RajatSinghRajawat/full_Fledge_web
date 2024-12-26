@@ -35,7 +35,7 @@ export const getCart = () => {
         };
 
         fetch("http://localhost:5000/getcart?userId=67441031faea89f5e1d847f2", requestOptions)
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((result) =>{
                 console.log(result.cart);
               
@@ -54,7 +54,7 @@ export const removeCart = (id) => {
         };
 
         fetch(`http://localhost:5000/removeCart?userId=67441031faea89f5e1d847f2&productId=${id}`, requestOptions)
-            .then((response) => response.text())
+            .then((response) => response.json())
             .then((result) => console.log(result))
             .catch((error) => console.error(error));
 

@@ -117,8 +117,8 @@ const Product = () => {
 
   return (
     <div>
-      <Nav />
 
+      <Nav />
       <div className="container-fluid mt-3">
         <div className="row">
           <div className="col-lg-6">
@@ -279,7 +279,7 @@ const Product = () => {
                 <div className="row Products-action-buttons">
                   <div className="col-6">
                     {/* <button className="btn btn-outline-danger w-100">Add To Cart</button> */}
-                    <button className="btn btn-outline-danger w-100 " onClick={()=>{dispatch(addCarts(_id))}}>Add To Cart</button>
+                    <button className="btn btn-outline-danger w-100 " onClick={() => { dispatch(addCarts(_id)) }}>Add To Cart</button>
                   </div>
                   <div className="col-6">
                     <button className="btn btn-danger w-100">Send Inquiry</button>

@@ -40,7 +40,7 @@ const addProfile = async (req, res) => {
 const getAllProfiles = async (req, res) => {
     try {
 
-        const profiles = await ProfileModel.find().populate('firstName');
+        const profiles = await ProfileModel.find();
         res.status(200).json({ message: 'Profiles retrieved successfully', data: profiles });
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving profiles', error: error.message });

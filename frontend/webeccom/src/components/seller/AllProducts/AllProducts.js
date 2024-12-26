@@ -53,8 +53,8 @@ const AllProducts = () => {
 
   return (
     <>
-      <Nav />
 
+      <Nav />
       <div>
 
         <Poster />

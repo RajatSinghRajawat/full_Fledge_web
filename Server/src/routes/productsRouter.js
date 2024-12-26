@@ -45,7 +45,7 @@ router.put('/updatePoster:id', updatePoster)
 
 //Porifle
 router.post('/addprofile', upload.array("files"), addProfile)
-router.get('/getprofile', verification, getAllProfiles)
+router.get('/getprofile', getAllProfiles)
 
 module.exports = router
 
