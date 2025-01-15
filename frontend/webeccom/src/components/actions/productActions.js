@@ -40,7 +40,7 @@ export const getProduct = createAsyncThunk(
         redirect: "follow",
       };
 
-      const response = await fetch(`http://localhost:5000/getProduct?productName=${data}`, requestOptions);
+      const response = await fetch(`http://localhost:5000/getProduct?keyword=${data}`, requestOptions);
       const result = await response.json();
       console.log('result ooooooooooooooooooooo', result)
       return result
@@ -64,10 +64,11 @@ export const getCarts = createAsyncThunk(
 
       const responce = await fetch("http://localhost:5000/getcart?userId=67441031faea89f5e1d847f2", requestOptions)
       const result = await responce.json();
-      console.log("get cart **********************8", result)
+      console.log("get cart **********************8", result,"i am ")
       return result;
 
     } catch (error) {
+      console.log(error,"i am erro")
       return rejectWithValue(error)
 
     }

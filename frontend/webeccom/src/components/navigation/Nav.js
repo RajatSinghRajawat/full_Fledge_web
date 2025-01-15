@@ -14,19 +14,31 @@ import { NavLink } from 'react-router-dom';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Cart from './Cart';
 import logo2 from '../navigation/logo2.png';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardActions from '@mui/material/CardActions';
 
 const Nav = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [showCart, setShowCart] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openLogoutModal, setOpenLogoutModal] = useState(false);
+
 
   const dispatch2 = useDispatch();
 
   const handleCartToggle = () => {
     setShowCart(!showCart);
+    console.log(setShowCart(!showCart));
+
   };
 
   const changeValue = (e) => {
     dispatch2(getProduct(e.target.value));
+    console.log("rajawat saab", dispatch2(getProduct(e.target.value)));
+
     console.log(e.target.value);
   };
 
@@ -55,6 +67,46 @@ const Nav = () => {
     pb: 3,
   };
 
+  const handleLogoutClick = () => {
+    setOpenLogoutModal(true);
+  };
+
+  const handleCloseLogoutModal = () => {
+    setOpenLogoutModal(false);
+  };
+
+  const logout = async () => {
+    try {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify({
+        "email": email,
+        "password": password
+      });
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      const response = await fetch("http://localhost:5000/LogOutUser", requestOptions);
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Logout Successful:", result);
+        alert("Logout Successful!");
+      } else {
+        console.error("Logout Failed:", response.statusText);
+        alert("Logout Failed!");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -70,7 +122,6 @@ const Nav = () => {
             </NavLink>
           </div>
 
-          {/* Search and Category Section */}
           <div className="hidden lg:flex items-center mx-auto w-full lg:w-1/2 space-x-2">
             <div className="relative inline-block">
               <button className="bg-gray-800 text-white px-4 py-2 rounded-l-md">
@@ -101,11 +152,9 @@ const Nav = () => {
             </button>
           </div>
 
-          {/* Right Section */}
           <div className="hidden lg:flex items-center space-x-6 text-white">
             <a href="#" className="hidden lg:block">EN</a>
 
-            {/* Hoverable Dropdown */}
             <div className="relative group">
               <a
                 href="#"
@@ -113,42 +162,50 @@ const Nav = () => {
               >
                 <span>Hello, Rajat<br /><strong className='py-3'>Account & Lists</strong></span>
               </a>
-              {/* Dropdown Menu */}
-              <div className="absolute hidden group-hover:block bg-white text-gray-700 rounded-md shadow-lg mt-2 w-48">
+
+              <div className="absolute hidden group-hover:block bg-white text-gray-700 rounded-md shadow-lg mt-2 w-48 z-40">
                 <NavLink to="/profile"> <a href="#profile" className="block px-4 py-2 hover:bg-gray-200">Your Profile</a></NavLink>
                 <a href="#orders" className="block px-4 py-2 hover:bg-gray-200">Your Orders</a>
                 <a href="#wishlist" className="block px-4 py-2 hover:bg-gray-200">Wishlist</a>
-                <a href="#logout" className="block px-4 py-2 hover:bg-gray-200">Logout</a>
+                <a onClick={handleLogoutClick} href="#logout" className="block px-4 py-2 hover:bg-gray-200">Logout</a>
               </div>
             </div>
+
+
+            {/* //Add to cart */}
 
             <a onClick={handleCartToggle} href="#cart" className="flex items-center">
               <Badge><Typography sx={{ fontSize: 'xl' }}>🛒</Typography></Badge>
             </a>
+
+
             <a href="#" onClick={handleOpen} className="block text-sm bg-yellow-500 px-4 py-2 rounded text-black">Sign Up/In</a>
           </div>
         </nav>
 
         {/* Modal for Sign In/Sign Up */}
-        <Modal
-          style={{ zIndex: "9999" }}
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="child-modal-title"
-          aria-describedby="child-modal-description"
-        >
-          <Box
-            sx={{
-              width: "70%",
-              height: "90vh",
-              margin: "2rem",
-              marginBottom: "1rem",
-              ...style,
-            }}
+        <div className=' z-10'>
+          <Modal
+            className='backdrop-blur-md h-screen w-screen'
+            style={{ zIndex: "9999" }}
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="child-modal-title"
+            aria-describedby="child-modal-description"
           >
-            <Register />
-          </Box>
-        </Modal>
+            <Box
+              sx={{
+                width: "70%",
+                height: "90vh",
+                margin: "2rem",
+                marginBottom: "1rem",
+                ...style,
+              }}
+            >
+              <Register />
+            </Box>
+          </Modal>
+        </div>
 
         {/* Cart Offcanvas */}
         <Offcanvas style={{ width: "500px" }} show={showCart} onHide={handleCartToggle}>
@@ -163,6 +220,8 @@ const Nav = () => {
 
       {/* Categories Component */}
       <Categories />
+
+
     </>
   );
 };

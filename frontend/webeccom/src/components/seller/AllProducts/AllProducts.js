@@ -6,6 +6,8 @@ import './product.css'
 import { getProduct } from '../../actions/productActions';
 import Poster from '../Posters/Poster';
 import Register from '../register/Login/Register';
+import Allpros from './Allpros';
+import ProductSection from './ProductSection';
 
 const AllProducts = () => {
   const navigate = useNavigate();
@@ -265,10 +267,8 @@ const AllProducts = () => {
           </Card>
         ))}
       </Box> */}
-
-      {/* <Register/> */}
-
-
+      {/* <Allpros/> */}
+      {/* <ProductSection /> */}
     </>
   );
 };

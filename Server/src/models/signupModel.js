@@ -27,14 +27,17 @@ const UserDetailsSchema = new mongoose.Schema({
     phone: {
         type: String,
         match: [/^\d{10}$/, 'Phone number must be 10 digits'],
+        default:null
     },
     gender: {
         type: String,
         enum: ['Male', 'Female', 'Other'],
+        default:null
     },
     dateOfBirth: {
         type: Date,
-        required: true,
+        required: false,
+        default:null
     },
     address: {
         street: { type: String, trim: true },

@@ -2,19 +2,9 @@ const mongoose = require('mongoose');
 const productModel = require('../models/allProductsModel');
 
 const Category = require('../models/catgories');
+const ApiFeatures = require('../utils/Apifeatures');
 
-
-// const addProduct = async (req, res) => {
-//     try {
-//         const { productName, description, discount, price, reducedMRP, image, id } = req.body;
-
-//         const productS = await productModel.create({ productName, description, discount, price, reducedMRP, image, id })
-//         res.status(201).json({status:"001", message: 'Product added successfully', product: productS });
-//     } catch (error) {
-//         res.status(500).json({status:"001", message: 'Failed to add product', error: error.message });
-//     }
-// }
-
+//add product //Admin 
 const addProduct = async (req, res) => {
     try {
         // console.log(req.body, "files");
@@ -24,7 +14,7 @@ const addProduct = async (req, res) => {
         var baseUrl = `http://${req.get("host")}`;
         baseUrl += "/Uploads/" + req.files[0].filename;
 
-        const { productName, description, discount, price, reducedMRP, size, color, specialization, soldBy, leadTime, responseRate, features , Id, name } = req.body;
+        const { productName, description, discount, price, reducedMRP, size, color, specialization, soldBy, leadTime, responseRate, features, Id, name, rating } = req.body;
 
         const uniqueId = new mongoose.Types.ObjectId().toString();
         const categorie = await Category.create({
@@ -45,9 +35,11 @@ const addProduct = async (req, res) => {
             soldBy,
             leadTime,
             responseRate,
+            rating,
             features,
             id: uniqueId,
             Categories_id: Id
+
         });
 
         // console.log(newProduct, "mm")
@@ -64,33 +56,57 @@ const addProduct = async (req, res) => {
     }
 }
 
+
 // const getProduct = async (req, res) => {
 //     try {
-//         const product = await productModel.find(); // Fetch all products
 
-//         res.status(200).json({
-//             status: "001",
-//             message: 'Products fetched successfully',
-//             product
-//         });
+//         const { productName } = req.query;
+//         const lowerCaseName = productName ? productName.toLowerCase() : '';
+
+//         const query = productName ? { productName: { $regex: lowerCaseName, $options: 'i' } } : {};
+
+//         const product = await productModel.find(query);
+
+        // res.status(200).json({
+        //     status: "001",
+        //     message: 'Products fetched successfully',
+        //     products: product,
+        //     totalProducts: product.length
+        // });
 //     } catch (error) {
-//         res.status(500).json({
-//             status: "002",
-//             message: 'Failed to fetch products',
-//             error: error.message
-//         });
+//         res.status(500).json({ status: "002", message: 'Failed to fetch products', error: error.message });
 //     }
-// };
+// }
+
+
 const getProduct = async (req, res) => {
     try {
+        // Initialize ApiFeatures with query and query string
+        const resultPage = 100;
+        // let a = await productModel.find({
+        //     productName: {
+        //         $regex: "iphone"
+        //     }cd 
+        // }).select('-password');
+        
+        // console.log(a,"sdfd")
+        if(!req.query.keyword){
+            req.query.keyword = ""
+        }
+        if(!req.query.rating){
+            req.query.rating = ""
+        }
+        const apiFeature = new  ApiFeatures(productModel.find().select('-password'), req.query) // Excludes password
+            .search()
+            // .filter()
+            .pagination(resultPage)
 
-        const { productName } = req.query;
-        const lowerCaseName = productName ? productName.toLowerCase() : '';
+            console.log(apiFeature)
+        // Execute the query
+        const product = await apiFeature.query;
+        console.log('Fetched Products:', product);
 
-        const query = productName ? { productName: { $regex: lowerCaseName, $options: 'i' } } : {};
-
-        const product = await productModel.find(query);
-
+        // Send response
         res.status(200).json({
             status: "001",
             message: 'Products fetched successfully',
@@ -98,9 +114,18 @@ const getProduct = async (req, res) => {
             totalProducts: product.length
         });
     } catch (error) {
-        res.status(500).json({ status: "002", message: 'Failed to fetch products', error: error.message });
+        console.error('Error fetching products:', error.message);
+        res.status(500).json({
+            status: "002",
+            message: "Failed to fetch products",
+            error: error.message,
+        });
     }
-}
+};
+
+
+
+
 const getProductID = async (req, res) => {
     const userid = req.params.id
     const all = await productModel.findById(userid)
@@ -108,6 +133,55 @@ const getProductID = async (req, res) => {
     res.send({ status: "001", message: "get One product", all })
 
 }
+
+//Update product //Admin 
+const UpdateProduct = async (req, res) => {
+    try {
+        let product = await productModel.findById(req.params.id);
+
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+
+        // Update the product
+        product = await productModel.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true,
+                useFindAndModify: false
+            }
+        );
+
+        return res.status(200).json({ success: true, message: "Updated Successfully", product });
+    } catch (error) {
+        // Handle errors
+        return res.status(500).json({ success: false, message: "Server Error", error: error.message });
+    }
+};
+const DeleteProduct = async (req, res) => {
+    try {
+        // Find the product by ID
+        const product = await productModel.findById(req.params.id);
+
+        // If the product doesn't exist
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+
+        // Remove the product
+        await product.remove();
+
+        // Respond with success message
+        return res.status(200).json({ success: true, message: "Product deleted successfully" });
+    } catch (error) {
+        // Handle errors
+        return res.status(500).json({ success: false, message: "Server Error", error: error.message });
+    }
+};
+
+
 const getProductsByCategory = async (req, res) => {
     try {
         const { Categories_id } = req.params;
@@ -134,4 +208,4 @@ const getProductsByCategory = async (req, res) => {
     }
 };
 
-module.exports = { addProduct, getProduct, getProductID ,getProductsByCategory }
+module.exports = { addProduct, getProduct, getProductID, getProductsByCategory, UpdateProduct, DeleteProduct }

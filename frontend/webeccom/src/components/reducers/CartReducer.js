@@ -76,12 +76,12 @@ const initialState = {
 
 
 export const cartSlice = createSlice({
-  name:'user',
+  name:'user1',
   initialState,
   reducers:{},
   extraReducers:(builder)=>{
     builder.addCase(getCarts.fulfilled,(state,action)=>{
-      // console.log(action,"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+      console.log(action,"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
       state.loading = false;
       state.value = action.payload;
       state.addUser = false
@@ -92,7 +92,7 @@ export const cartSlice = createSlice({
       state.error = null
     })
     builder.addCase(getCarts.rejected,(state,action)=>{
-      console.log("********************************************************");
+      console.log("********************************************************in recject",state.error);
       state.loading = false;
       state.error = action.message.error;
       
