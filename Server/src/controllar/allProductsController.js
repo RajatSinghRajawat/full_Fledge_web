@@ -104,7 +104,7 @@ const getProduct = async (req, res) => {
             console.log(apiFeature)
         // Execute the query
         const product = await apiFeature.query;
-        console.log('Fetched Products:', product);
+        // console.log('Fetched Products:', product);
 
         // Send response
         res.status(200).json({
@@ -146,12 +146,12 @@ const UpdateProduct = async (req, res) => {
         // Update the product
         product = await productModel.findByIdAndUpdate(
             req.params.id,
-            req.body,
-            {
-                new: true,
-                runValidators: true,
-                useFindAndModify: false
-            }
+            req.body
+            // {
+            //     new: true,
+            //     runValidators: true,
+            //     useFindAndModify: false
+            // }
         );
 
         return res.status(200).json({ success: true, message: "Updated Successfully", product });

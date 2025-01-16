@@ -87,7 +87,7 @@ const Product = () => {
     return <div className='d-flex justify-between align-middle'>
 
       <h1>loading...</h1>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex' ,justifyContent:"center",alignItems:"center",height:"100vh",width:"100%l"}}>
         <CircularProgress />
       </Box>
     </div>;

@@ -78,7 +78,7 @@ const Register = () => {
   }
 
   return (
-    <section className="flex border-none justify-center items-center bg-[#eee] p-5">
+    <section className="flex border-none justify-center items-center p-5">
       <div className="relative w-full max-w-4xl h-[500px] bg-white shadow-lg overflow-hidden rounded-lg">
         {/* Sign-In Section */}
         <div

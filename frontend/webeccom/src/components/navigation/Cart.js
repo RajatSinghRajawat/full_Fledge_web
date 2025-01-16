@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarts } from '../actions/productActions';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
     const [totalPrice, setTotalPrice] = useState(0);
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { value, error } = useSelector((state) => state.Mycart);
 
@@ -58,6 +59,7 @@ const Cart = () => {
                 value.cart.Products.map((p) => (
                     <div
                         key={p.productId._id}
+                        onClick={() => navigate(`onedata/${p._id}`)}
                         className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 mb-4 flex items-center"
                     >
                         <img
@@ -90,6 +92,9 @@ const Cart = () => {
             <div className="mt-6 text-right">
                 <p className="text-lg font-semibold">Total Price: ₹{totalPrice}</p>
             </div>
+
+            <button className='mt-5 w-full bg-sky-400 text-base font-semibold p-2 rounded-md'>Place Order</button>
+
         </div>
     );
 };
