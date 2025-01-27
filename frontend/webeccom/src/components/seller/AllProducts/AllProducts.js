@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import './product.css'
 import { getProduct } from '../../actions/productActions';
 import Poster from '../Posters/Poster';
+import Allpros from './Allpros';
 
 
 const AllProducts = () => {

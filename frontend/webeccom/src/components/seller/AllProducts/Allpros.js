@@ -264,146 +264,149 @@
 
 
 
-  import React from "react";
-  import {
-    Box,
-    AppBar,
-    Tabs,
-    Tab,
-    Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    IconButton,
-    Button,
-  } from "@mui/material";
-  import {
-    Email,
-    Phone,
-    Visibility,
-    CheckCircleOutline,
-  } from "@mui/icons-material";
+// import React from "react";
+// import {
+//   Box,
+//   AppBar,
+//   Tabs,
+//   Tab,
+//   Typography,
+//   Table,
+//   TableBody,
+//   TableCell,
+//   TableContainer,
+//   TableHead,
+//   TableRow,
+//   Paper,
+//   IconButton,
+//   Button,
+// } from "@mui/material";
+// import {
+//   Email,
+//   Phone,
+//   Visibility,
+//   CheckCircleOutline,
+// } from "@mui/icons-material";
 
-  const Allpros = () => {
-    const [tabIndex, setTabIndex] = React.useState(0);
+// const Allpros = () => {
+//   const [tabIndex, setTabIndex] = React.useState(0);
 
-    const handleTabChange = (event, newValue) => {
-      setTabIndex(newValue);
-    };
+//   const handleTabChange = (event, newValue) => {
+//     setTabIndex(newValue);
+//   };
 
-    const rows = Array(8).fill({
-      sno: "#001",
-      date: "17/11/2023 12:00",
-      name: "Akshat Singh",
-      country: "India",
-      phone: "+91 99999 99999",
-      email: "info@tatasons.com",
-      category: "Electronics, IoT Sensor",
-      product: "Lexus-32",
-      qty: "32",
-    });
+//   const rows = Array(8).fill({
+//     sno: "#001",
+//     date: "17/11/2023 12:00",
+//     name: "Akshat Singh",
+//     country: "India",
+//     phone: "+91 99999 99999",
+//     email: "info@tatasons.com",
+//     category: "Electronics, IoT Sensor",
+//     product: "Lexus-32",
+//     qty: "32",
+//   });
 
-    return (
-      <Box sx={{ padding: 2, backgroundColor: "#f7faff", height: "100vh" }}>
-        <AppBar position="static" color="default" elevation={1}>
-          <Tabs
-            value={tabIndex}
-            onChange={handleTabChange}
-            indicatorColor="primary"
-            textColor="primary"
-            variant="fullWidth"
-          >
-            <Tab label="Inbox" />
-            <Tab label="New Leads (10+)" />
-            <Tab label="Chats (10+)" />
-            <Tab label="Converted" />
-            <Tab label="Dropped" />
-            <Tab label="RFQs" />
-          </Tabs>
-        </AppBar>
+//   return (
+//     <Box sx={{ padding: 2, backgroundColor: "#f7faff", height: "100vh" }}>
+//       <AppBar position="static" color="default" elevation={1}>
+//         <Tabs
+//           value={tabIndex}
+//           onChange={handleTabChange}
+//           indicatorColor="primary"
+//           textColor="primary"
+//           variant="fullWidth"
+//         >
+//           <Tab label="Inbox" />
+//           <Tab label="New Leads (10+)" />
+//           <Tab label="Chats (10+)" />
+//           <Tab label="Converted" />
+//           <Tab label="Dropped" />
+//           <Tab label="RFQs" />
+//         </Tabs>
+//       </AppBar>
 
-        <Box sx={{ marginY: 2 }}>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead sx={{ backgroundColor: "#e9f4ff" }}>
-                <TableRow>
-                  <TableCell>S.No</TableCell>
-                  <TableCell>Date/Time</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Contact Information</TableCell>
-                  <TableCell>Category</TableCell>
-                  <TableCell>Product</TableCell>
-                  <TableCell align="center">Qty</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{row.sno}</TableCell>
-                    <TableCell>{row.date}</TableCell>
-                    <TableCell>
-                      {row.name}
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "gray", fontSize: "0.8rem" }}
-                      >
-                        {row.country}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
-                      <Box>
-                        <Typography
-                          variant="body2"
-                          sx={{ display: "flex", alignItems: "center" }}
-                        >
-                          <Phone fontSize="small" sx={{ marginRight: 1 }} />
-                          {row.phone}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          sx={{ display: "flex", alignItems: "center" }}
-                        >
-                          <Email fontSize="small" sx={{ marginRight: 1 }} />
-                          {row.email}
-                        </Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell>{row.category}</TableCell>
-                    <TableCell>{row.product}</TableCell>
-                    <TableCell align="center">
-                      <Button
-                        variant="contained"
-                        size="small"
-                        sx={{
-                          backgroundColor: "#e7f8f0",
-                          color: "#28a745",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {row.qty}
-                      </Button>
-                    </TableCell>
-                    <TableCell>
-                      <IconButton color="primary">
-                        <Visibility />
-                      </IconButton>
-                      <IconButton sx={{ color: "#28a745" }}>
-                        <CheckCircleOutline />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-      </Box>
-    );
-  };
+//       <Box sx={{ marginY: 2 }}>
+//         <TableContainer component={Paper}>
+//           <Table>
+//             <TableHead sx={{ backgroundColor: "#e9f4ff" }}>
+//               <TableRow>
+//                 <TableCell>S.No</TableCell>
+//                 <TableCell>Date/Time</TableCell>
+//                 <TableCell>Name</TableCell>
+//                 <TableCell>Contact Information</TableCell>
+//                 <TableCell>Category</TableCell>
+//                 <TableCell>Product</TableCell>
+//                 <TableCell align="center">Qty</TableCell>
+//                 <TableCell>Actions</TableCell>
+//               </TableRow>
+//             </TableHead>
+//             <TableBody>
+//               {rows.map((row, index) => (
+//                 <TableRow key={index}>
+//                   <TableCell>{row.sno}</TableCell>
+//                   <TableCell>{row.date}</TableCell>
+//                   <TableCell>
+//                     {row.name}
+//                     <Typography
+//                       variant="body2"
+//                       sx={{ color: "gray", fontSize: "0.8rem" }}
+//                     >
+//                       {row.country}
+//                     </Typography>
+//                   </TableCell>
+//                   <TableCell>
+//                     <Box>
+//                       <Typography
+//                         variant="body2"
+//                         sx={{ display: "flex", alignItems: "center" }}
+//                       >
+//                         <Phone fontSize="small" sx={{ marginRight: 1 }} />
+//                         {row.phone}
+//                       </Typography>
+//                       <Typography
+//                         variant="body2"
+//                         sx={{ display: "flex", alignItems: "center" }}
+//                       >
+//                         <Email fontSize="small" sx={{ marginRight: 1 }} />
+//                         {row.email}
+//                       </Typography>
+//                     </Box>
+//                   </TableCell>
+//                   <TableCell>{row.category}</TableCell>
+//                   <TableCell>{row.product}</TableCell>
+//                   <TableCell align="center">
+//                     <Button
+//                       variant="contained"
+//                       size="small"
+//                       sx={{
+//                         backgroundColor: "#e7f8f0",
+//                         color: "#28a745",
+//                         fontWeight: "bold",
+//                       }}
+//                     >
+//                       {row.qty}
+//                     </Button>
+//                   </TableCell>
+//                   <TableCell>
+//                     <IconButton color="primary">
+//                       <Visibility />
+//                     </IconButton>
+//                     <IconButton sx={{ color: "#28a745" }}>
+//                       <CheckCircleOutline />
+//                     </IconButton>
+//                   </TableCell>
+//                 </TableRow>
+//               ))}
+//             </TableBody>
+//           </Table>
+//         </TableContainer>
+//       </Box>
+//     </Box>
+//   );
+// };
 
-  export default Allpros;
+// export default Allpros;
+
+
+

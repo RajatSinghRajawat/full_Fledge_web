@@ -137,6 +137,8 @@ const getProductID = async (req, res) => {
 //Update product //Admin 
 const UpdateProduct = async (req, res) => {
     try {
+        console.log(req.body , "data");
+        
         let product = await productModel.findById(req.params.id);
 
         if (!product) {

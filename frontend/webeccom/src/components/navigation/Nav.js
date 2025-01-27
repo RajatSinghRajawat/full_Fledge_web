@@ -10,7 +10,7 @@ import Typography from '@mui/joy/Typography';
 import { styled } from '@mui/joy';
 import { IoCloudUploadSharp } from "react-icons/io5";
 import Categories from './Categories';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Cart from './Cart';
 import logo2 from '../navigation/logo2.png';
@@ -20,6 +20,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 
 const Nav = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showCart, setShowCart] = useState(false);
@@ -36,8 +37,9 @@ const Nav = () => {
   };
 
   const changeValue = (e) => {
-    dispatch2(getProduct(e.target.value));
-    console.log("rajawat saab", dispatch2(getProduct(e.target.value)));
+    // dispatch2(getProduct(e.target.value));
+    // console.log("rajawat saab", dispatch2(getProduct(e.target.value)));
+    navigate(`/search/${e.target.value}`)
 
     console.log(e.target.value);
   };
@@ -135,10 +137,11 @@ const Nav = () => {
             </div>
             <input
               onChange={changeValue}
-              type="search"
+              // type="search"
               placeholder="Search Amazon.in"
               className="w-full p-2 border border-gray-300 focus:outline-none text-black"
             />
+
             <Button
               component="label"
               variant="outlined"
@@ -179,7 +182,16 @@ const Nav = () => {
             </a>
 
 
-            <a href="#" onClick={handleOpen} className="block text-sm bg-yellow-500 px-4 py-2 rounded text-black">Sign Up/In</a>
+            {/* <a href="#" onClick={handleOpen} className="block text-sm bg-yellow-500 px-4 py-2 rounded text-black">Sign Up/In</a> */}
+
+            <a
+              href="#"
+              onClick={() => navigate('/register')}
+              className="block text-sm bg-yellow-500 px-4 py-2 rounded text-black"
+            >
+              Sign Up/In
+            </a>
+
           </div>
         </nav>
 

@@ -89,7 +89,7 @@ const getCart = async (req, res) => {
 
 
 const removeCart = async (req, res) => {
-  const { productId  , userId} = req.query;
+  const { productId, userId } = req.query;
   // const id = req.params
 
   // console.log(productId ,id ,  "pr")
@@ -99,7 +99,7 @@ const removeCart = async (req, res) => {
     if (!cart) {
       return res.status(404).json({ message: 'Cart not found' });
     }
-    console.log(cart , "c")
+    console.log(cart, "c")
     const productIndex = cart.Products.findIndex(
       (item) => item.productId.toString() === productId
     );
@@ -127,4 +127,4 @@ const removeCart = async (req, res) => {
 };
 
 
-module.exports = { addCart, getCart ,removeCart};
+module.exports = { addCart, getCart, removeCart };

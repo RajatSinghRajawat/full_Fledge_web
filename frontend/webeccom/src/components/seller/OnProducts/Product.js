@@ -6,9 +6,6 @@ import { PiGreaterThan } from 'react-icons/pi';
 import ReactImageMagnify from 'react-image-magnify';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCarts, getProduct } from '../../actions/productActions';
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
-
 
 const Product = () => {
   const { userId } = useParams();
@@ -84,14 +81,38 @@ const Product = () => {
   };
 
   if (!productData) {
-    return <div className='d-flex justify-between align-middle'>
+    return (
+      <div className="text-center h-[100vh] w-[100vw] flex items-center justify-center bg-black text-white">
+        <div className="relative flex justify-center items-center">
+          <div className="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-purple-500"></div>
+          <img
+            src="https://www.svgrepo.com/show/509001/avatar-thinking-9.svg"
+            alt="Loading"
+            className="rounded-full h-28 w-28"
+          />
+        </div>
+      </div>
+    );
 
-      <h1>loading...</h1>
-      <Box sx={{ display: 'flex' ,justifyContent:"center",alignItems:"center",height:"100vh",width:"100%l"}}>
-        <CircularProgress />
-      </Box>
-    </div>;
   }
+
+  // setTimeout(() => {
+  //   if (!productData) {
+  //     return (
+  //       <div className="text-center h-[100vh] w-[100vw] flex items-center justify-center bg-black text-white">
+  //         <div className="relative flex justify-center items-center">
+  //           <div className="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-purple-500"></div>
+  //           <img
+  //             src={image}
+  //             alt="Loading"
+  //             className="rounded-full h-28 w-28"
+  //           />
+  //         </div>
+  //       </div>
+  //     );
+  
+  //   }
+  // }, 2000);
 
   const {
     image,
@@ -304,10 +325,10 @@ const Product = () => {
                   <div className="row Products-action-buttons">
                     <div className="col-6">
                       {/* <button className="btn btn-outline-danger w-100">Add To Cart</button> */}
-                      <button className="btn btn-outline-danger w-100 " onClick={() => { dispatch(addCarts(_id)) }}>Add To Cart</button>
+                      <button className="btn btn-outline-danger w-100 rounded-md" onClick={() => { dispatch(addCarts(_id)) }}>Add To Cart</button>
                     </div>
                     <div className="col-6">
-                      <button className="btn btn-danger w-100">Send Inquiry</button>
+                      <button className="btn btn-danger w-100">Buy Now</button>
                     </div>
                   </div>
 

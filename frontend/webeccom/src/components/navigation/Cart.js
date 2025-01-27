@@ -9,9 +9,6 @@ const Cart = () => {
     const dispatch = useDispatch();
     const { value, error } = useSelector((state) => state.Mycart);
 
-    console.log(value, 'cartData');
-    console.log(error, 'error');
-
     // Fetch cart data when the component mounts
     useEffect(() => {
         dispatch(getCarts());
@@ -43,7 +40,6 @@ const Cart = () => {
             .then((result) => {
                 console.log(result);
                 if (result.success) {
-
                     dispatch(getCarts());
                 } else {
                     console.error('Failed to remove product:', result.message);
@@ -52,10 +48,25 @@ const Cart = () => {
             .catch((error) => console.error('Error removing product:', error));
     };
 
+    if (!value?.cart?.Products) {
+        return (
+            <div className="text-center h-[100vh] w-[100vw] flex items-center justify-center bg-black text-white">
+                <div className="relative flex justify-center items-center">
+                    <div className="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-purple-500"></div>
+                    <img
+                        src="https://www.svgrepo.com/show/509001/avatar-thinking-9.svg"
+                        alt="Loading"
+                        className="rounded-full h-28 w-28"
+                    />
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="p-6 bg-gray-100 min-h-screen">
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Your Cart</h1>
-            {value?.cart?.Products?.length > 0 ? (
+            {value.cart.Products.length > 0 ? (
                 value.cart.Products.map((p) => (
                     <div
                         key={p.productId._id}
@@ -78,7 +89,10 @@ const Cart = () => {
                         </p>
                         <div className="flex gap-2">
                             <button
-                                onClick={() => remove(p.productId._id)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    remove(p.productId._id);
+                                }}
                                 className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition-all"
                             >
                                 Remove
@@ -93,8 +107,9 @@ const Cart = () => {
                 <p className="text-lg font-semibold">Total Price: ₹{totalPrice}</p>
             </div>
 
-            <button className='mt-5 w-full bg-sky-400 text-base font-semibold p-2 rounded-md'>Place Order</button>
-
+            <button className="mt-5 w-full bg-sky-400 text-base font-semibold p-2 rounded-md">
+                Place Order
+            </button>
         </div>
     );
 };

@@ -7,6 +7,8 @@ import Admin from './components/admin/Admin.js';
 import Footer from './components/footer/Footer.js';
 import Profile from './components/seller/profile/Profile.js';
 import Nav from './components/navigation/Nav.js';
+import ProductsSearch from './components/seller/OnProducts/ProductsSearch.js';
+import Register from './components/seller/register/Login/Register.js';
 
 
 const App = () => {
@@ -18,7 +20,9 @@ const App = () => {
             <Route path="/" element={<AllProducts />} />
             <Route path="/onedata/:userId" element={<Product />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/search/:keyword" element={<ProductsSearch/>} />
           </Routes>
         </BrowserRouter>
         <Footer />

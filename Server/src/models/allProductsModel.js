@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const productSchema = mongoose.Schema({
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "UserDetailsSignup",
+    },
 
     productName: {
         type: String,
@@ -72,17 +76,17 @@ const productSchema = mongoose.Schema({
     },
     reviews: [
         {
-            name:{
-                type:String,
-                required:true
+            name: {
+                type: String,
+                required: true
             },
-            rating:{
-                type:Number,
-                required:true
+            rating: {
+                type: Number,
+                required: true
             },
-            comment:{
-                type:String,
-                required:true
+            comment: {
+                type: String,
+                required: true
             }
         }
     ]
