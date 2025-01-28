@@ -49,7 +49,7 @@ const Product = () => {
         const result = await response.json();
         if (result?.all) {
           setid(result.all._id);
-          console.log("result", result.all._id)
+          console.log("resultwe ", result.all._id)
           setProductData(result.all);
           let newFilterProdcut = value.products.filter((value) => {
             return value._id != id
@@ -79,6 +79,8 @@ const Product = () => {
   const handleDecrement = () => {
     setQuantity(quantity > 1 ? quantity - 1 : 1);
   };
+
+  console.log(productData,"asdfads")
 
   if (!productData) {
     return (

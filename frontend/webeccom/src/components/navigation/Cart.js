@@ -70,7 +70,7 @@ const Cart = () => {
                 value.cart.Products.map((p) => (
                     <div
                         key={p.productId._id}
-                        onClick={() => navigate(`onedata/${p._id}`)}
+                        onClick={()=>navigate(`/onedata/${p?.productId?._id}`)}
                         className="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 mb-4 flex items-center"
                     >
                         <img

@@ -29,7 +29,7 @@ const Register = () => {
 
       if (response?.data?.token) {
         localStorage.setItem("secret", response.data.token);
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (error) {
       setError(error.response?.data?.message || "Something went wrong!");
@@ -49,7 +49,7 @@ const Register = () => {
 
       if (response?.data?.token) {
         localStorage.setItem("token", response.data.token);
-        navigate("/dashboard");
+        navigate("/");
       }
     } catch (error) {
       setError(error.response?.data?.message || "Something went wrong!");
@@ -139,6 +139,7 @@ const Register = () => {
                   <button
                     className={`w-full mt-4 py-2 bg-teal-400 text-white rounded-lg hover:bg-teal-500 ${isLoading && "opacity-50 cursor-not-allowed"}`}
                     disabled={isLoading}
+                    onClick={()=>isLoading ? "Wating..." : setActiveTab("login")}
                   >
                     {isLoading ? "Creating Account..." : "Create Account"}
                   </button>
@@ -155,7 +156,7 @@ const Register = () => {
                     <FaFacebookF size={18} /> Login with Facebook
                   </button>
                 </div>
-                <p className="text-gray-500 mb-4">- OR -</p>
+                <p className="text-gray-500 mb-4 text-center">- OR -</p>
                 {error && <p className="text-red-500 text-center mb-4">{error}</p>}
                 <form onSubmit={login} className="flex flex-col gap-4 w-3/4 mx-auto">
                   <div className="flex items-center gap-2 border-b border-gray-300 pb-2">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getProduct } from '../actions/productActions';
 import Box from '@mui/material/Box';
@@ -20,6 +20,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 
 const Nav = () => {
+  const myRef = useRef(null);
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -39,9 +40,18 @@ const Nav = () => {
   const changeValue = (e) => {
     // dispatch2(getProduct(e.target.value));
     // console.log("rajawat saab", dispatch2(getProduct(e.target.value)));
-    navigate(`/search/${e.target.value}`)
 
-    console.log(e.target.value);
+    console.log("innnn")
+    
+    if(e.key == "Enter"){
+      if(e.target.value == ""){
+        return;
+      }
+
+      navigate(`/search/${e.target.value}`)
+    }
+
+    // console.log(e.target.value);
   };
 
   const VisuallyHiddenInput = styled('input')`
@@ -113,6 +123,15 @@ const Nav = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  
+
+  useEffect(() => {
+    myRef.current.addEventListener('keypress', changeValue);
+    // return () => {
+    //   myRef.current.removeEventListener('keypress', changeValue);
+    // };
+  }, []);
+
   return (
     <>
       <div className="bg-gray-900">
@@ -136,7 +155,7 @@ const Nav = () => {
               </ul>
             </div>
             <input
-              onChange={changeValue}
+              ref={myRef}
               // type="search"
               placeholder="Search Amazon.in"
               className="w-full p-2 border border-gray-300 focus:outline-none text-black"

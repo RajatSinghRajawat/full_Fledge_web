@@ -12,7 +12,8 @@ const { addCart, getCart, removeCart } = require('../controllar/cartControllar')
 const { addProfile, getAllProfiles } = require('../controllar/ProfileCntroller')
 const { addPoster, getPoster, updatePoster, deletePoster } = require('../controllar/posterController')
 const { updateUser } = require('../controllar/SingupController')
-const newOrder = require('../controllar/orderController')
+const { newOrder, getSingleOrder } = require('../controllar/orderController')
+const filterProduct = require('../controllar/FilterController')
 
 const router = express.Router();
 
@@ -23,8 +24,9 @@ router.post("/multer", upload.array("files"), addProduct)
 router.get('/getProduct', getProduct)
 router.get('/getProduct/:id', getProductID)
 router.get('/products/category/:Categories_id', getProductsByCategory);
-router.put("/updateProduct/:id", upload.array("files"),UpdateProduct)
+router.put("/updateProduct/:id", upload.array("files"), UpdateProduct)
 router.delete("/Deleteproduct/:id", DeleteProduct);
+router.get("/filterProduct", filterProduct)
 
 //register
 
@@ -54,8 +56,8 @@ router.get('/getprofile', getAllProfiles)
 
 //orders
 
-router.post("/addOrders" , newOrder)
-// router.get("/getOrders" , newOrder) 
+router.post("/addOrders", newOrder)
+router.get("/getSingleOrders", getSingleOrder)
 
 module.exports = router
 

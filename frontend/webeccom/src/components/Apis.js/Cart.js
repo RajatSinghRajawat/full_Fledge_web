@@ -1,3 +1,9 @@
+// import { useNavigate } from "react-router-dom";
+
+
+// const navigate = useNavigate()
+
+
 export const addCart = (id) => {
     try {
         // Get the token from localStorage
@@ -6,6 +12,7 @@ export const addCart = (id) => {
         // Check if the token exists
         if (!token) {
             console.log("No token found. Cannot add to cart.");
+            // navigate('/register')
             return; // Exit the function if the token is missing
         }
 

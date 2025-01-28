@@ -24,4 +24,16 @@ const newOrder = async (req, res) => {
     }
 };
 
-module.exports = newOrder;
+
+const getSingleOrder = async (req, res) => {
+    const order = await ordersModel.findById(req.params.id).populate(
+        "UserDetails", "name email"
+    );
+    if (!order) {
+        return res.status(401).json("order not found")
+    }
+
+    res.status(200).json({ message: "order get successfully", order })
+
+}
+module.exports = {newOrder , getSingleOrder}

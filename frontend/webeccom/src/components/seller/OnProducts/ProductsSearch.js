@@ -138,7 +138,15 @@ const ProductsSearch = () => {
                 ))}
               </div>
             ) : (
+              <div className="d-flex flex-column justify-content-center align-items-center" style={{ height: "100vh" }}>
+              <img
+                src="https://cdni.iconscout.com/illustration/premium/thumb/product-is-empty-illustration-download-in-svg-png-gif-file-formats--no-records-list-record-emply-data-user-interface-pack-design-development-illustrations-6430781.png?f=webp"
+                alt=""
+                className="img-fluid"
+              />
               <p className="mt-4 text-center">No products found for "{keyword}".</p>
+            </div>
+            
             )}
           </div>
         </div>
