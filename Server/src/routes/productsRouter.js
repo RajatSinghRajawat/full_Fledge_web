@@ -11,7 +11,7 @@ const verification = require('../midddleware/Usermiddleware')
 const { addCart, getCart, removeCart } = require('../controllar/cartControllar')
 const { addProfile, getAllProfiles } = require('../controllar/ProfileCntroller')
 const { addPoster, getPoster, updatePoster, deletePoster } = require('../controllar/posterController')
-const { updateUser } = require('../controllar/SingupController')
+const { updateUser,getData } = require('../controllar/SingupController')
 const { newOrder, getSingleOrder } = require('../controllar/orderController')
 const filterProduct = require('../controllar/FilterController')
 
@@ -34,7 +34,7 @@ router.post('/signUpUser', userRegister)
 router.post('/LogInUser', userLogin)
 router.post('/LogOutUser', verification, userLogout)
 router.put('/update/:id', upload.array("files"), updateUser)
-
+router.get('/getDetails/:id',getData)
 
 //cart
 router.post('/addtocart', addCart)
@@ -58,6 +58,8 @@ router.get('/getprofile', getAllProfiles)
 
 router.post("/addOrders", newOrder)
 router.get("/getSingleOrders", getSingleOrder)
+
+
 
 module.exports = router
 

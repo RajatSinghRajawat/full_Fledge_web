@@ -105,12 +105,26 @@ const userLogout = async (req, res) => {
     }
 };
 
+
+const getData = async (req,res)=>{
+ try {
+    const id = req.params.id
+    console.log(id,"id***********************")
+    const result = await UserDetails.findById(id);
+    return res.status(200).send({Message:result})
+ } catch (error) {
+    console.log(error)
+    return res.status(500).send({message:error})
+ }
+}
+
+
 const updateUser = async (req, res) => {
     try {
-        console.log(
-            req.body , "body"
-        );
-        
+        console.log(req.body, "body");
+
+
+
         const { firstName, phone, gender, dateOfBirth, address } = req.body;
         // console.log(req.body.firstName,"*************");
         // console.log(req.params.id);
@@ -119,16 +133,21 @@ const updateUser = async (req, res) => {
         const profileImageArray = req.files?.map((file) => file.filename);
 
         
+        var baseUrl = `http://${req.get("host")}`;
+        baseUrl += "/Uploads/" + req.files[0].filename;
+
 
         const userId = req.params.id; // Assuming `req.user.id` contains the authenticated user's ID
         const date = new Date(dateOfBirth);
 
         const updateData = {
-            firstName, 
+            firstName,
             phone,
             gender,
             dateOfBirth: date,
             address,
+            profilePicture: profileImageArray ,
+
         };
 
         if (profileImageArray?.length) {
@@ -158,6 +177,9 @@ const updateUser = async (req, res) => {
 };
 
 
+
+
+
 module.exports = {
-    userRegister, userLogin, userLogout ,  updateUser
+    userRegister, userLogin, userLogout, updateUser,getData
 }

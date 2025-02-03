@@ -21,8 +21,7 @@ const UserDetailsSchema = new mongoose.Schema({
     },
 
     profilePicture: {
-        type: Array,
-        default: 'https://example.com/default-profile.png',
+        type: Array
     },
     phone: {
         type: String,
@@ -35,7 +34,7 @@ const UserDetailsSchema = new mongoose.Schema({
         default:null
     },
     dateOfBirth: {
-        type: Date,
+        type: String,
         required: false,
         default:null
     },

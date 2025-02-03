@@ -19,6 +19,18 @@ const AllProducts = () => {
   })
 
   console.log("value", value)
+
+
+
+  const imagesOP = [
+    "https://m.media-amazon.com/images/I/71BsqhpSq0L._SX695_.jpg",
+    "https://m.media-amazon.com/images/I/61Q9GMxIqcL._SY695_.jpg",
+    "https://m.media-amazon.com/images/I/71d1cjLtoxL._SX695_.jpg",
+    "https://m.media-amazon.com/images/I/71Asp1Qy-EL._SY695_.jpg"
+  ];
+  const [mainImage, setMainImage] = useState(imagesOP[0]);
+
+
   // console.log(value.products,'***************')
 
   // const getProducts = async () => {
@@ -42,6 +54,7 @@ const AllProducts = () => {
   //   getProducts();
   // }, []);
 
+
   useEffect(() => {
     dispatch(getProduct(""));
   }, []);
@@ -54,100 +67,29 @@ const AllProducts = () => {
 
   return (
     <>
-
       <Nav />
-      <div>
+      <div className='m-20'>
 
-        <Poster />
-        {/* <div className="grid lg:grid-cols-2 grid-cols-1 gap-10 bg-blue-200 h-auto lg:h-[90vh] p-6">
-          <div className="lg:m-24 m-8 flex flex-col justify-center">
+        <div>
 
-            <div className="mb-4">
-              <button className="bg-gradient-to-r from-indigo-800 to-blue-600 text-white rounded-sm px-4 py-2 shadow-lg">
-                Weekend Discount
-              </button>
-            </div>
-
-            <div className="mb-4">
-              <h1 className="text-3xl lg:text-5xl font-bold leading-tight">
-                Shopping With Us For <br /> Better Quality and the <br /> Best Price
-              </h1>
-            </div>
-            <div className="mb-6">
-              <p className="text-base lg:text-lg font-medium text-gray-800">
-                We have prepaid special discounts for you on grocery products. <br />
-                Don't miss this opportunity!
-              </p>
-            </div>
-            <div className="flex items-center mt-4 space-x-4">
-              <button type="button" className="btn btn-info">
-                Shop Now
-              </button>
-              <h2 className="text-2xl font-bold text-green-600">$21</h2>
-            </div>
-          </div>
-
-          <div className="flex justify-center items-center">
-            <img
-              className="max-w-full h-auto rounded-md shadow-lg"
-              src="https://images.macrumors.com/article-new/2023/10/iPhone-16-Cameras-Feature-1.jpg"
-              alt="Discount Products"
-            />
-          </div>
-        </div> */}
-
-      </div>
-      <div className="container rounded-sm  p-3 mt-4 bg-orange-400 m-5  w-auto">
-        <h2 className="text-2xl font-bold mb-4">Blockbuster deals with exchange</h2>
-        <div className=" flex gap-6  scroll pb-3"
-        >
-          {value.products?.map((product, index) => (
-            <div
-              key={product._id}
-              onClick={() => navigate(`onedata/${product._id}`)}
-              className="bg-white  shadow-md p-2 w-72 h-[100%] min-w-[300px]" // Set fixed width and background color
-            >
-              <img
-                src={`http://localhost:5000/${product.image[0]}`}
-                alt={product.productName}
-                className="w-full h-48 object-cover  mb-4"
-              />
-              <div className="flex items-center">
-                <div className="bg-red-600 text-white text-xs font-semibold py-1 px-2 rounded">
-                  {product.discount}% off
-                </div>
-                <div className="ml-2 text-red-600 text-sm font-bold">
-                  Great Indian Festival
-                </div>
-              </div>
-              <h3 className="text-lg font-semibold mb-2"> {product.productName}</h3>
-              <p className="text-gray-800 font-medium mb-2">
-                ₹ {product.price}{' '} M.R.P: ₹
-                <span className="line-through text-gray-500">   {product.reducedMRP}</span>
-              </p>
-              <p className="text-gray-600 mb-4 font-semibold"> {product.description}</p>
-
-            </div>
-          ))}
+          <Poster />
         </div>
-      </div>
-      <div className="container mx-auto p-2 mt-4 bg-orange-400">
-        <h2 className="text-2xl font-bold mb-4">Blockbuster deals with exchange</h2>
-        <div className="flex gap-6 scroll pb-3 h-100">
-          {value.products
-            ?.filter((product) => product.price <= 299)
-            .map((product) => (
+        <div className="container rounded-sm shadow-md  p-3 mt-4  m-5  w-auto">
+          <h2 className="text-2xl font-bold mb-4">Blockbuster deals with exchange</h2>
+          <div className=" flex gap-6  scroll pb-3"
+          >
+            {value.products?.map((product, index) => (
               <div
                 key={product._id}
                 onClick={() => navigate(`onedata/${product._id}`)}
-                className="bg-white shadow-md p-2 w-72 h-96 min-w-[300px] flex flex-col justify-between"
+                className="bg-white  shadow-md p-2 w-72 h-[100%] min-w-[300px]" // Set fixed width and background color
               >
                 <img
                   src={`http://localhost:5000/${product.image[0]}`}
                   alt={product.productName}
-                  className="w-full h-40 object-cover mb-4"
+                  className="w-full h-48 object-cover  mb-4"
                 />
-                <div className="flex items-center mb-2">
+                <div className="flex items-center">
                   <div className="bg-red-600 text-white text-xs font-semibold py-1 px-2 rounded">
                     {product.discount}% off
                   </div>
@@ -155,19 +97,316 @@ const AllProducts = () => {
                     Great Indian Festival
                   </div>
                 </div>
-                <h3 className="text-lg font-semibold mb-2 truncate">{product.productName}</h3>
+                <h3 className="text-lg font-semibold mb-2"> {product.productName}</h3>
                 <p className="text-gray-800 font-medium mb-2">
-                  ₹ {product.price} M.R.P: ₹
-                  <span className="line-through text-gray-500">{product.reducedMRP}</span>
+                  ₹ {product.price}{' '} M.R.P: ₹
+                  <span className="line-through text-gray-500">   {product.reducedMRP}</span>
                 </p>
-                <p className="text-gray-600 mb-4 font-semibold line-clamp-2">{product.description}</p>
+                <p className="text-gray-600 mb-4 font-semibold"> {product.description}</p>
+
               </div>
             ))}
+          </div>
         </div>
-      </div>
+        <div className="container shadow-md mx-auto p-2 mt-4">
+          <h2 className="text-2xl font-bold mb-4">Blockbuster deals with exchange</h2>
+          <div className="flex gap-6 scroll pb-3 h-100">
+            {value.products
+              ?.filter((product) => product.price <= 299)
+              .map((product) => (
+                <div
+                  key={product._id}
+                  onClick={() => navigate(`onedata/${product._id}`)}
+                  className="bg-white shadow-md p-2 w-72 h-96 min-w-[300px] flex flex-col justify-between"
+                >
+                  <img
+                    src={`http://localhost:5000/${product.image[0]}`}
+                    alt={product.productName}
+                    className="w-full h-40 object-cover mb-4"
+                  />
+                  <div className="flex items-center mb-2">
+                    <div className="bg-red-600 text-white text-xs font-semibold py-1 px-2 rounded">
+                      {product.discount}% off
+                    </div>
+                    <div className="ml-2 text-red-600 text-sm font-bold">
+                      Great Indian Festival
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 truncate">{product.productName}</h3>
+                  <p className="text-gray-800 font-medium mb-2">
+                    ₹ {product.price} M.R.P: ₹
+                    <span className="line-through text-gray-500">{product.reducedMRP}</span>
+                  </p>
+                  <p className="text-gray-600 mb-4 font-semibold line-clamp-2">{product.description}</p>
+                </div>
+              ))}
+          </div>
+        </div>
 
 
-      {/* <Box
+        <div className="container mt-3">
+          <div className="row">
+            <div className="col-lg-3">
+
+
+              <div className='p-3 bg-white rounded-md shadow-lg h-auto'>
+                <h1 className='text-bold text-lg font-bold'>Explore more</h1>
+                <div className="p-2 flex flex-col justify-center">
+                  {/* Main Image */}
+                  <img className='flex justify-center w-[300px] h-[150px] object-contain' src={mainImage} alt="Main" />
+
+                  <div className='leading-tight'>
+                    <h1 className='text-sm text-grey pt-3'>AFROJACK Men's Chelsea Ankle Boots</h1>
+                    <p className='mt-1'>
+                      <span className='text-lg font-bold'>₹999</span>
+                      <span className='text-xs ps-2 pb-2 pt-2'>M.R.P.: ₹6,495</span>
+                    </p>
+                  </div>
+
+                  {/* Thumbnail Images */}
+                  <div className='flex justify-around mt-2'>
+                    {imagesOP.map((img, index) => (
+                      <div
+                        key={index}
+                        className='border border-2 p-1 rounded-md cursor-pointer'
+                        onMouseOver={() => setMainImage(img)}
+                      >
+                        <img className='flex justify-center w-12' src={img} alt={`Thumbnail ${index}`} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+            <div className="col-lg-3">
+
+
+              <div className='p-3 bg-white rounded-md shadow-lg h-auto'>
+                <h1 className='text-bold text-lg font-bold'>Explore more</h1>
+                <div className="p-2 flex flex-col justify-center">
+                  {/* Main Image */}
+                  <img className='flex justify-center w-[300px] h-[150px] object-contain' src={mainImage} alt="Main" />
+
+                  <div className='leading-tight'>
+                    <h1 className='text-sm text-grey pt-3'>AFROJACK Men's Chelsea Ankle Boots</h1>
+                    <p className='mt-1'>
+                      <span className='text-lg font-bold'>₹999</span>
+                      <span className='text-xs ps-2 pb-2 pt-2'>M.R.P.: ₹6,495</span>
+                    </p>
+                  </div>
+
+                  {/* Thumbnail Images */}
+                  <div className='flex justify-around mt-2'>
+                    {imagesOP.map((img, index) => (
+                      <div
+                        key={index}
+                        className='border border-2 p-1 rounded-md cursor-pointer'
+                        onMouseOver={() => setMainImage(img)}
+                      >
+                        <img className='flex justify-center w-12' src={img} alt={`Thumbnail ${index}`} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+            <div className="col-lg-3">
+
+
+
+              <div className='p-3 bg-white rounded-md shadow-lg h-auto'>
+                <h1 className='text-bold text-lg font-bold'>Explore more</h1>
+                <div className="p-2 flex flex-col justify-center">
+                  {/* Main Image */}
+                  <img className='flex justify-center w-[300px] h-[150px] object-contain' src={mainImage} alt="Main" />
+
+                  <div className='leading-tight'>
+                    <h1 className='text-sm text-grey pt-3'>AFROJACK Men's Chelsea Ankle Boots</h1>
+                    <p className='mt-1'>
+                      <span className='text-lg font-bold'>₹999</span>
+                      <span className='text-xs ps-2 pb-2 pt-2'>M.R.P.: ₹6,495</span>
+                    </p>
+                  </div>
+
+                  {/* Thumbnail Images */}
+                  <div className='flex justify-around mt-2'>
+                    {imagesOP.map((img, index) => (
+                      <div
+                        key={index}
+                        className='border border-2 p-1 rounded-md cursor-pointer'
+                        onMouseOver={() => setMainImage(img)}
+                      >
+                        <img className='flex justify-center w-12' src={img} alt={`Thumbnail ${index}`} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+            <div className="col-lg-3">
+
+
+              <div className='p-3 bg-white rounded-md shadow-lg h-auto'>
+                <h1 className='text-bold text-lg font-bold'>Explore more</h1>
+                <div className="p-2 flex flex-col justify-center">
+                  {/* Main Image */}
+                  <img className='flex justify-center w-[300px] h-[150px] object-contain' src={mainImage} alt="Main" />
+
+                  <div className='leading-tight'>
+                    <h1 className='text-sm text-grey pt-3'>AFROJACK Men's Chelsea Ankle Boots</h1>
+                    <p className='mt-1'>
+                      <span className='text-lg font-bold'>₹999</span>
+                      <span className='text-xs ps-2 pb-2 pt-2'>M.R.P.: ₹6,495</span>
+                    </p>
+                  </div>
+
+                  {/* Thumbnail Images */}
+                  <div className='flex justify-around mt-2'>
+                    {imagesOP.map((img, index) => (
+                      <div
+                        key={index}
+                        className='border border-2 p-1 rounded-md cursor-pointer'
+                        onMouseOver={() => setMainImage(img)}
+                      >
+                        <img className='flex justify-center w-12' src={img} alt={`Thumbnail ${index}`} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div className="flex justify-between">
+
+          <div className=' m-10 p-3 bg-white rounded-md shadow-lg w-[300px] h-auto'>
+            <h1 className='text-bold text-lg font-bold'>Explore more </h1>
+            <div className=" p-2 flex flex-col justify-center">
+              <img className='flex justify-center w-[300px] h-[150px] object-contain' src="https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY175_.jpg" alt="" />
+              <div className='leading-tight'>
+                <h1 className='text-sm text-grey pt-3'>AFROJACK Men's Chelsea Ankle Boots</h1>
+                <p className='mt-1'><span className='text-lg font-bold'>₹999</span><span className='text-xs ps-2 pb-2 pt-2'>M.R.P.: ₹6,495</span></p>
+
+              </div>
+              <div className='flex justify-around mt-2'>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY175_.jpg" alt="" />
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <div className=' m-10 p-3 bg-white rounded-md shadow-lg w-[300px] h-auto'>
+            <h1 className='text-bold text-lg font-bold'>Explore more </h1>
+            <div className=" p-2 flex flex-col justify-center">
+              <img className='flex justify-center w-[300px] h-[150px] object-contain' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+              <div className='leading-tight'>
+                <h1 className='text-sm text-grey pt-3'>AFROJACK Men's Chelsea Ankle Boots</h1>
+                <p className='mt-1'><span className='text-lg font-bold'>₹999</span><span className='text-xs ps-2 pb-2 pt-2'>M.R.P.: ₹6,495</span></p>
+
+              </div>
+              <div className='flex justify-around mt-2'>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div className=' m-10 p-3 bg-white rounded-md shadow-lg w-[300px] h-auto'>
+            <h1 className='text-bold text-lg font-bold'>Explore more </h1>
+            <div className=" p-2 flex flex-col justify-center">
+              <img className='flex justify-center w-[300px] h-[150px] object-contain' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+              <div className='leading-tight'>
+                <h1 className='text-sm text-grey pt-3'>AFROJACK Men's Chelsea Ankle Boots</h1>
+                <p className='mt-1'><span className='text-lg font-bold'>₹999</span><span className='text-xs ps-2 pb-2 pt-2'>M.R.P.: ₹6,495</span></p>
+
+              </div>
+              <div className='flex justify-around mt-2'>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+
+          <div className=' m-10 p-3 bg-white rounded-md shadow-lg w-[350px] h-auto'>
+            <div className='flex justify-between p-3'>
+              <div>
+                <img className='h-[100px]' src="https://m.media-amazon.com/images/I/31U7DsTXDxL._MCnd_AC_.jpg" alt="" />
+                <h6 className='text-base font-bold'>Sweatshirt for Men</h6>
+              </div>
+              <div>
+                <img className='h-[100px]' src="https://m.media-amazon.com/images/I/41IZrCXfsSL._MCnd_AC_.jpg" alt="" />
+                <h6 className='text-base font-bold'>Sweatshirt for Men</h6>
+
+              </div>
+            </div>
+            <div className='flex justify-between p-3 pt-2'>
+              <div>
+                <img className='h-[100px]' src="https://m.media-amazon.com/images/I/31ztpzzaDSL._MCnd_AC_.jpg" alt="" />
+                <h6 className='text-base font-bold'>Sweatshirt for Men</h6>
+
+              </div>
+              <div>
+                <img className='h-[100px] bg-slate-400  text-center' src="https://m.media-amazon.com/images/I/41SwyubT5sL._MCnd_AC_.jpg" alt="" />
+                <h6 className='text-base font-bold'>Sweatshirt for Men</h6>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
+        {/* <Box
         sx={{
           display: 'flex',
           gap: 3,
@@ -266,8 +505,9 @@ const AllProducts = () => {
           </Card>
         ))}
       </Box> */}
-      {/* <Allpros/> */}
-      {/* <ProductSection /> */}
+        {/* <Allpros/> */}
+        {/* <ProductSection /> */}
+      </div>
     </>
   );
 };
