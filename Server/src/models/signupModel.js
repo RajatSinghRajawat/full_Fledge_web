@@ -21,22 +21,24 @@ const UserDetailsSchema = new mongoose.Schema({
     },
 
     profilePicture: {
-        type: Array
+        type: Array,
+        default: ['https://w7.pngwing.com/pngs/910/606/png-transparent-head-the-dummy-avatar-man-tie-jacket-user-thumbnail.png'] // Replace with your default image URL
     },
+    
     phone: {
         type: String,
         match: [/^\d{10}$/, 'Phone number must be 10 digits'],
-        default:null
+        default: null
     },
     gender: {
         type: String,
         enum: ['Male', 'Female', 'Other'],
-        default:null
+        default: null
     },
     dateOfBirth: {
         type: String,
         required: false,
-        default:null
+        default: null
     },
     address: {
         street: { type: String, trim: true },
@@ -53,7 +55,10 @@ const UserDetailsSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-
+    role: {
+        type: String,
+        defult: 0
+    },
 
     token: {
         type: String,

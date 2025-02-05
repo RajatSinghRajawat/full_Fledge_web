@@ -14,6 +14,7 @@ const { addPoster, getPoster, updatePoster, deletePoster } = require('../control
 const { updateUser,getData } = require('../controllar/SingupController')
 const { newOrder, getSingleOrder } = require('../controllar/orderController')
 const filterProduct = require('../controllar/FilterController')
+const { get } = require('../controllar/SingupController')
 
 const router = express.Router();
 
@@ -35,6 +36,7 @@ router.post('/LogInUser', userLogin)
 router.post('/LogOutUser', verification, userLogout)
 router.put('/update/:id', upload.array("files"), updateUser)
 router.get('/getDetails/:id',getData)
+router.get('/get',get)
 
 //cart
 router.post('/addtocart', addCart)

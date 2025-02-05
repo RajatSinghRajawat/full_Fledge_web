@@ -70,6 +70,9 @@ const productSchema = mongoose.Schema({
         type: Number,
 
     },
+    productCategoryName: {
+        type: String
+    },
     numOfReviews: {
         type: Number,
         default: 0

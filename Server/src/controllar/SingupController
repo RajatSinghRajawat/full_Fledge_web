@@ -105,17 +105,26 @@ const userLogout = async (req, res) => {
     }
 };
 
+const get = async (req, res) => {
+    try {
+        const getUsers = await UserDetails.find({}); // Fetch users with role 0
+        return res.status(200).json({ message: "User fetch successful", getUsers });
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
 
-const getData = async (req,res)=>{
- try {
-    const id = req.params.id
-    console.log(id,"id***********************")
-    const result = await UserDetails.findById(id);
-    return res.status(200).send({Message:result})
- } catch (error) {
-    console.log(error)
-    return res.status(500).send({message:error})
- }
+
+const getData = async (req, res) => {
+    try {
+        const id = req.params.id
+        console.log(id, "id***********************")
+        const result = await UserDetails.findById(id);
+        return res.status(200).send({ Message: result })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({ message: error })
+    }
 }
 
 
@@ -132,7 +141,7 @@ const updateUser = async (req, res) => {
 
         const profileImageArray = req.files?.map((file) => file.filename);
 
-        
+
         var baseUrl = `http://${req.get("host")}`;
         baseUrl += "/Uploads/" + req.files[0].filename;
 
@@ -146,7 +155,7 @@ const updateUser = async (req, res) => {
             gender,
             dateOfBirth: date,
             address,
-            profilePicture: profileImageArray ,
+            profilePicture: profileImageArray,
 
         };
 
@@ -181,5 +190,5 @@ const updateUser = async (req, res) => {
 
 
 module.exports = {
-    userRegister, userLogin, userLogout, updateUser,getData
+    userRegister, userLogin, userLogout, updateUser, getData, get
 }

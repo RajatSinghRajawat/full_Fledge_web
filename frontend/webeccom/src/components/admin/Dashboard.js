@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { TextField, Grid, Paper } from '@mui/material';
+import AllUser from './AllUser';
 
 const style = {
     position: 'absolute',
@@ -144,6 +145,12 @@ const Dashboard = () => {
                             >
                                 Placed
                             </li>
+                            <li
+                                className={`menu-item ${activeTab === 'User' ? 'active' : ''}`}
+                                onClick={() => setActiveTab('User')}
+                            >
+                                Users
+                            </li>
                         </ul>
                     </div>
                     <div className="profile-section">
@@ -174,49 +181,74 @@ const Dashboard = () => {
                             activeTab === 'Products' ? (
                                 <div className="card">
                                     Products
-                                    <div>
-                                        <div className='container'>
-                                            <div className="row">
-                                                {
-
-                                                    ProductDetails.map((products, index) => {
-                                                        return (
-                                                            <>
-
-                                                                <div className="col-lg-4 mt-1">
-                                                                    <Card sx={{ maxWidth: 345 }}>
-                                                                        <CardActionArea>
-                                                                            <CardMedia
-                                                                                component="img"
-                                                                                height="140"
-                                                                                image="/static/images/cards/contemplative-reptile.jpg"
-                                                                                alt="green iguana"
-                                                                            />
-                                                                            <CardContent>
-                                                                                <Typography gutterBottom variant="h5" component="div">
-                                                                                    {products.productName}
-                                                                                </Typography>
-                                                                                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                                                                    {products.description}
-                                                                                </Typography>
-                                                                            </CardContent>
-                                                                        </CardActionArea>
-                                                                    </Card>
-                                                                </div>
-
-                                                            </>
-                                                        )
-                                                    })
-                                                }
-                                            </div >
+                                    <div className='container'>
+                                        <div className="row">
+                                            {
+                                                ProductDetails.map((products, index) => {
+                                                    return (
+                                                        <div className="col-lg-4 mt-1" key={index}>
+                                                            <Card sx={{ maxWidth: 345 }}>
+                                                                <CardActionArea>
+                                                                    <CardMedia
+                                                                        component="img"
+                                                                        height="140"
+                                                                        image={products.image || "/static/images/cards/contemplative-reptile.jpg"}
+                                                                        alt={products.productName}
+                                                                    />
+                                                                    <CardContent>
+                                                                        <Typography gutterBottom variant="h5" component="div">
+                                                                            {products.productName}
+                                                                        </Typography>
+                                                                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                                                            {products.description}
+                                                                        </Typography>
+                                                                    </CardContent>
+                                                                </CardActionArea>
+                                                            </Card>
+                                                        </div>
+                                                    );
+                                                })
+                                            }
                                         </div>
-
+                                    </div>
+                                </div>
+                            ) : activeTab === 'User' ? (
+                                <div className="card">
+                                    Users
+                                    <div className='container'>
+                                        <p>Our range of services includes web development, app development, and digital marketing.</p>
+                                        <AllUser/>
+                                    </div>
+                                </div>
+                            ) : activeTab === 'Placed' ? (
+                                <div className="card">
+                                    Placed
+                                    <div className='container'>
+                                        <p>We are a tech company focused on delivering high-quality solutions to our clients.</p>
+                                    </div>
+                                </div>
+                            ) : activeTab === 'Categories' ? (
+                                <div className="card">
+                                    Categories
+                                    <div className='container'>
+                                        <p>Email: contact@company.com</p>
+                                        <p>Phone: +123 456 7890</p>
+                                    </div>
+                                </div>
+                            ) : activeTab === 'Order' ? (
+                                <div className="card">
+                                    Order
+                                    <div className='container'>
+                                        <p>Email: contact@company.com</p>
+                                        <p>Phone: +123 456 7890</p>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="card">Select a Tab</div>
                             )
                         }
+
+
                     </div>
                 </div>
             </div>

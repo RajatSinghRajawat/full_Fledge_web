@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = () => {
   return (
     <div>
-         <footer className="bg-gray-900 text-gray-300 py-8 mt-2">
+         <footer className="bg-gray-900 text-gray-300 py-8 mt-2 z-[99999]">
       <div className="max-w-7xl mx-auto px-4">
         {/* Footer Links */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">

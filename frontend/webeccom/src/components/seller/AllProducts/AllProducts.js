@@ -17,6 +17,7 @@ const AllProducts = () => {
     // console.log('hello')
     return state.MYproduct
   })
+  const [mouseImage, setMouseImage] = useState(null);
 
   console.log("value", value)
 
@@ -31,6 +32,24 @@ const AllProducts = () => {
   const [mainImage, setMainImage] = useState(imagesOP[0]);
 
 
+
+  const [hoveredImageIndex, setHoveredImageIndex] = useState({});
+
+  // Handle mouse enter for individual products
+  const handleMouseEnter = (productId, index) => {
+    setHoveredImageIndex((prevState) => ({
+      ...prevState,
+      [productId]: index,
+    }));
+  };
+
+  // Handle mouse leave to reset image for specific product
+  const handleMouseLeave = (productId) => {
+    setHoveredImageIndex((prevState) => ({
+      ...prevState,
+      [productId]: null, // Reset hover state back to null when mouse leaves
+    }));
+  };
   // console.log(value.products,'***************')
 
   // const getProducts = async () => {
@@ -62,6 +81,7 @@ const AllProducts = () => {
   useEffect(() => {
     // let productsLessThan299 = value.products.filter(p => p.price <= 299)
     // console.log(z,"zzz")
+
     setData()
   }, [value])
 
@@ -289,6 +309,80 @@ const AllProducts = () => {
             </div>
           </div>
         </div>
+
+
+
+        {/*  */}
+        <div className="container mx-auto mt-5 mb-4 px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {value.products
+          ?.filter((product) => product.price <= 299)
+          .map((product) => {
+            const currentHoveredImageIndex = hoveredImageIndex[product._id];
+
+            return (
+              <div
+                key={product._id}
+                className="bg-white shadow-md p-3 rounded-lg flex flex-col justify-between hover:shadow-lg transition duration-300"
+              >
+                <div
+                  onClick={() => navigate(`onedata/${product._id}`)}
+                  className="cursor-pointer"
+                >
+                  <h1 className="text-lg font-bold text-center mb-2">
+                    Explore more
+                  </h1>
+
+                  {/* Main Image */}
+                  <img
+                    src={`http://localhost:5000/${
+                      currentHoveredImageIndex !== null
+                        ? product.image[currentHoveredImageIndex] // Show hovered image if there is one
+                        : product.image[0] // Default to the first image if no hover
+                    }`}
+                    alt={product.productName}
+                    className="w-full h-40 object-cover rounded-md"
+                  />
+
+                  {/* Product Info */}
+                  <div className="text-center mt-2">
+                    <h2 className="text-sm text-gray-700">{product.productName}</h2>
+                    <p className="mt-1">
+                      <span className="text-lg font-bold">${product.price}</span>
+                      <span className="text-xs text-red-500 ml-2">
+                        {product.discount}% off
+                      </span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Thumbnail Images */}
+                <div className="flex justify-center gap-2 mt-3">
+                  {product.image.slice(0, 4).map((img, index) => (
+                    <div
+                      key={index}
+                      className={`border ${
+                        currentHoveredImageIndex === index
+                          ? "border-blue-500"
+                          : "border-gray-300"
+                      } rounded-md cursor-pointer p-1 transition duration-200`}
+                      onMouseEnter={() => handleMouseEnter(product._id, index)} // Set hovered image index for this product
+                      onMouseLeave={() => handleMouseLeave(product._id)} // Reset image index on mouse leave
+                    >
+                      <img
+                        src={`http://localhost:5000/${img}`}
+                        alt={`product_img_${index}`}
+                        className="w-16 h-16 object-cover rounded-md"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+      </div>
+    </div>
+
 
 
         <div className="flex justify-between">

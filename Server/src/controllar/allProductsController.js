@@ -14,7 +14,7 @@ const addProduct = async (req, res) => {
         var baseUrl = `http://${req.get("host")}`;
         baseUrl += "/Uploads/" + req.files[0].filename;
 
-        const { productName, description, discount, price, reducedMRP, size, color, specialization, soldBy, leadTime, responseRate, features, Id, name, rating } = req.body;
+        const { productName, description, discount, price, reducedMRP, size, color, specialization, soldBy, leadTime, responseRate, features, Id, name, rating , productCategoryName } = req.body;
 
         const uniqueId = new mongoose.Types.ObjectId().toString();
         const categorie = await Category.create({
@@ -37,6 +37,7 @@ const addProduct = async (req, res) => {
             responseRate,
             rating,
             features,
+            productCategoryName,
             id: uniqueId,
             Categories_id: Id
 

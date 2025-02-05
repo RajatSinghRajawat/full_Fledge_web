@@ -14,7 +14,7 @@ const newOrder = async (req, res) => {
             shippingPrice,
             totalPrice,
             orderStatus,
-            user: req.user, // Assuming `req.user` contains the authenticated user's ID
+            user: req.user, 
         });
 
         res.status(201).json({ message: "Order added successfully", order }); // Updated status code
