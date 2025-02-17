@@ -1,6 +1,8 @@
 import { createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 import { addCart, getCart } from "../Apis.js/Cart";
 import { removeCart } from "../Apis.js/Cart";
+import { toast } from "react-toastify";
+
 // src/redux/actions/productActions.js
 export const FETCH_PRODUCT_SUCCESS = 'FETCH_PRODUCT_SUCCESS';
 export const FETCH_PRODUCT_ERROR = 'FETCH_PRODUCT_ERROR';
@@ -79,27 +81,25 @@ export const addCarts = createAsyncThunk(
   'addCart',
   async (data, { rejectWithValue }) => {
     try {
-      addCart(data)
-
+      const response = await addCart(data);
+      toast.success("Item added to cart successfully!"); // ✅ Success toast
+      return response;
     } catch (error) {
-      return rejectWithValue(error)
-
+      toast.error("Failed to add item to cart!"); // ❌ Error toast
+      return rejectWithValue(error);
     }
   }
-
 )
 
 export const removeCarts = createAsyncThunk(
-  'addCart',
+  'removeCart', // ✅ Corrected action type
   async (data, { rejectWithValue }) => {
     try {
-      removeCart(data)
-
-
+      await removeCart(data); // ✅ Await the function
+      toast.success("Item removed from cart successfully!"); // ✅ Success toast
     } catch (error) {
-      return rejectWithValue(error)
-
+      toast.error("Failed to remove item from cart!"); // ❌ Error toast
+      return rejectWithValue(error);
     }
   }
-
-)
+);

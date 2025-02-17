@@ -26,9 +26,11 @@ const newOrder = async (req, res) => {
 
 
 const getSingleOrder = async (req, res) => {
-    const order = await ordersModel.findById(req.params.id).populate(
-        "UserDetails", "name email"
-    );
+    console.log(req.user,"user");
+    
+    const order = await ordersModel.findById({user:req.user})
+    console.log(order,"ordr");
+    
     if (!order) {
         return res.status(401).json("order not found")
     }

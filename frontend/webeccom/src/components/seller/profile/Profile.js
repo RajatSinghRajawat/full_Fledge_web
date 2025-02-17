@@ -3,8 +3,6 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 import Nav from '../../navigation/Nav';
 
 const Profile = () => {
-  const [data,setdata] = useState();
- 
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
@@ -13,8 +11,8 @@ const Profile = () => {
     gender: '',
     dateOfBirth: '',
     image: null,
+    currentSection: 'account',
   });
-
   const [imagePreview, setImagePreview] = useState(null);
 
   const handleInputChange = (e) => {
@@ -37,51 +35,50 @@ const Profile = () => {
 
   const updateProfile = async (e) => {
     e.preventDefault();
-    console.log("Updating profile...");
     const formData = new FormData();
     Object.keys(profileData).forEach((key) => {
       if (profileData[key]) {
-        formData.append(key, key === "image" ? profileData[key] : profileData[key]);
+        formData.append(key, key === 'image' ? profileData[key] : profileData[key]);
       }
     });
 
     try {
-      const response = await fetch("http://localhost:5000/update/676e7a9fe95f5f08369a19c2", {
-        method: "PUT",
+      const response = await fetch('http://localhost:5000/update/676e7a9fe95f5f08369a19c2', {
+        method: 'PUT',
         body: formData,
       });
       const result = await response.json();
-      console.log("Profile updated:", result);
+      console.log('Profile updated:', result);
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error('Error updating profile:', error);
     }
   };
 
+  const getData = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/getDetails/676e7a9fe95f5f08369a19c2');
+      const res = await response.json();
+      if (res.Message) {
+        setProfileData((prevData) => ({
+          ...prevData,
+          name: res.Message.firstName || '',
+          email: res.Message.email || '',
+          phone: res.Message.phone || '',
+          address: res.Message.address || '',
+          gender: res.Message.gender || '',
+          dateOfBirth: res.Message.dateOfBirth || '',
+          image: res.Message.profilePicture[0] || null,
+        }));
+        setImagePreview(res.Message.profilePicture[0] || null);
+      }
+    } catch (error) {
+      console.error('Error fetching profile data:', error);
+    }
+  };
 
-  const getData = async ()=>{
-    const requestOptions = {
-      method: "GET",
-      redirect: "follow"
-    };
-    
-    const result = await fetch("http://localhost:5000/getDetails/676e7a9fe95f5f08369a19c2", requestOptions)
-    const res = await result.json();
-    setdata(res)
-    console.log(res.Message.profilePicture[0],'********************************')
-    setImagePreview(res.Message.profilePicture[0])
-    // setname(res.firstName)
-    // setphone(res.phone);
-    // setgender(res.gender);
-    // setdob(res.dateOfBirth);
-    // setaddress(res.address);
-    // setEmail(res.email);
-    // setimage(res.profilePicture);
-    // console.log(res)  
-  }
-
-  useEffect(()=>{
+  useEffect(() => {
     getData();
-  },[])
+  }, []);
 
   return (
     <>
@@ -93,10 +90,14 @@ const Profile = () => {
               <h2 className="text-xl font-semibold mb-4">Profile</h2>
               <ul className="space-y-4">
                 <li>
-                  <button onClick={() => setProfileData({ ...profileData, currentSection: 'orders' })} className={profileData.currentSection === 'orders' ? 'text-blue-500' : 'hover:text-gray-400'}>My Orders</button>
+                  <button onClick={() => setProfileData({ ...profileData, currentSection: 'orders' })} className={profileData.currentSection === 'orders' ? 'text-blue-500' : 'hover:text-gray-400'}>
+                    My Orders
+                  </button>
                 </li>
                 <li>
-                  <button onClick={() => setProfileData({ ...profileData, currentSection: 'account' })} className={profileData.currentSection === 'account' ? 'text-blue-500' : 'hover:text-gray-400'}>My Account</button>
+                  <button onClick={() => setProfileData({ ...profileData, currentSection: 'account' })} className={profileData.currentSection === 'account' ? 'text-blue-500' : 'hover:text-gray-400'}>
+                    My Account
+                  </button>
                 </li>
               </ul>
             </div>
@@ -117,7 +118,7 @@ const Profile = () => {
                       <label htmlFor="file-upload" className="absolute bottom-0 right-0 p-2 bg-gray-700 rounded-full cursor-pointer">
                         <FaEdit className="text-white" />
                       </label>
-                      <input type="file" id="file-upload" name="fileInput" className="hidden" onChange={handleImageChange} />
+                      <input type="file" id="file-upload" className="hidden" onChange={handleImageChange} />
                       {imagePreview && (
                         <button type="button" onClick={handleImageDelete} className="absolute top-0 right-0 p-2 bg-red-500 rounded-full">
                           <FaTrash className="text-white" />
@@ -125,25 +126,19 @@ const Profile = () => {
                       )}
                     </div>
                     <div className="flex-1">
-                      {['firstName', 'phone', 'gender', 'dateOfBirth', 'address', 'email'].map((field) => {
-                        console.log(data,'*****************************')
-                        return (
-                        
-                          <div key={field} className="mb-4">
-                            <label htmlFor={field} className="block text-sm capitalize">{field}</label>
-                            <input
-                              type={field === 'dateOfBirth' ? 'date' : 'text'}
-                              id={field}
-                              name={field}
-                              value={data.Message[field]}
-                              className="w-full p-2 bg-gray-700 rounded-lg text-white"
-                              onChange={handleInputChange}
-                            />
-                          </div>
-                        )
-                      }
-                      
-                      )}
+                      {['name', 'phone', 'gender', 'dateOfBirth', 'address', 'email'].map((field) => (
+                        <div key={field} className="mb-4">
+                          <label htmlFor={field} className="block text-sm capitalize">{field}</label>
+                          <input
+                            type={field === 'dateOfBirth' ? 'date' : 'text'}
+                            id={field}
+                            name={field}
+                            value={profileData[field]}
+                            className="w-full p-2 bg-gray-700 rounded-lg text-white"
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <button type="submit" className="w-full p-3 bg-blue-600 rounded-lg hover:bg-blue-700">Update Account</button>

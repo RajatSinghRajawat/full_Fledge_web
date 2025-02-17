@@ -31,12 +31,12 @@ const Poster = () => {
 
     return (
         <div className="bg-blue-200 h-auto lg:h-[90vh] p-6 flex justify-center">
-            <Carousel  autoPlay 
-    infiniteLoop 
-    showThumbs={false} 
-    showStatus={false} 
-    interval={1500} // Change images every 1.5 seconds
-    transitionTime={500}>
+            <Carousel autoPlay
+                infiniteLoop
+                showThumbs={false}
+                showStatus={false}
+                interval={1500} // Change images every 1.5 seconds
+                transitionTime={500}>
                 {Posters?.map((poster, index) => (
                     <div key={index} className="grid lg:grid-cols-2 grid-cols-1 gap-10">
                         <div className="lg:m-24 m-8 flex flex-col justify-center">

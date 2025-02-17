@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarts } from '../actions/productActions';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 const Cart = () => {
     const [totalPrice, setTotalPrice] = useState(0);
@@ -28,10 +29,10 @@ const Cart = () => {
     // Function to remove a product from the cart
     const remove = (productId) => {
         const requestOptions = {
-            method: 'GET',
-            redirect: 'follow',
+            method: "GET",
+            redirect: "follow",
         };
-
+    
         fetch(
             `http://localhost:5000/removeCart?userId=67441031faea89f5e1d847f2&productId=${productId}`,
             requestOptions
@@ -40,13 +41,19 @@ const Cart = () => {
             .then((result) => {
                 console.log(result);
                 if (result.success) {
-                    dispatch(getCarts());
+                    toast.success("Item removed from cart successfully!"); // ✅ Success toast
+                    // Remove the product from the local cart immediately
+                    dispatch(getCarts()); // Refresh the cart
                 } else {
-                    console.error('Failed to remove product:', result.message);
+                    toast.error(`Failed to remove product: ${result.message}`); // ❌ Error toast
                 }
             })
-            .catch((error) => console.error('Error removing product:', error));
+            .catch((error) => {
+                toast.error("Error removing product!"); // ❌ Error toast for fetch failure
+                console.error("Error removing product:", error);
+            });
     };
+    
 
     if (!value?.cart?.Products) {
         return (

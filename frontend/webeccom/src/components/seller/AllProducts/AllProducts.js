@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Nav from '../../navigation/Nav';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,6 +6,8 @@ import './product.css'
 import { getProduct } from '../../actions/productActions';
 import Poster from '../Posters/Poster';
 import Allpros from './Allpros';
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { Rating } from '@mui/material';
 
 
 const AllProducts = () => {
@@ -17,7 +19,6 @@ const AllProducts = () => {
     // console.log('hello')
     return state.MYproduct
   })
-  const [mouseImage, setMouseImage] = useState(null);
 
   console.log("value", value)
 
@@ -31,25 +32,44 @@ const AllProducts = () => {
   ];
   const [mainImage, setMainImage] = useState(imagesOP[0]);
 
-
+  const [valueRating, setValueRating] = React.useState(2);
 
   const [hoveredImageIndex, setHoveredImageIndex] = useState({});
 
   // Handle mouse enter for individual products
   const handleMouseEnter = (productId, index) => {
-    setHoveredImageIndex((prevState) => ({
-      ...prevState,
+    setHoveredImageIndex((prev) => ({
+      ...prev,
       [productId]: index,
     }));
   };
 
-  // Handle mouse leave to reset image for specific product
+  // Handle mouse leave to reset image to default (first image)
   const handleMouseLeave = (productId) => {
-    setHoveredImageIndex((prevState) => ({
-      ...prevState,
-      [productId]: null, // Reset hover state back to null when mouse leaves
-    }));
+    setHoveredImageIndex((prev) => {
+      const updatedState = { ...prev };
+      delete updatedState[productId]; // Remove the key instead of setting it to null
+      return updatedState;
+    });
   };
+
+
+  // if (!value.products) {
+  //   return (
+  //     <div className="text-center h-[100vh] w-[100vw] flex items-center justify-center bg-black text-white">
+  //       <div className="relative flex justify-center items-center">
+  //         <div className="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-purple-500"></div>
+  //         <img
+  //           src="https://www.svgrepo.com/show/509001/avatar-thinking-9.svg"
+  //           alt="Loading"
+  //           className="rounded-full h-28 w-28"
+  //         />
+  //       </div>
+  //     </div>
+  //   );
+
+  // }
+
   // console.log(value.products,'***************')
 
   // const getProducts = async () => {
@@ -73,6 +93,34 @@ const AllProducts = () => {
   //   getProducts();
   // }, []);
 
+  // setTimeout(() => {
+  //   <div className="text-center h-[100vh] w-[100vw] flex items-center justify-center bg-black text-white">
+  //     <div className="relative flex justify-center items-center">
+  //       <div className="absolute animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-purple-500"></div>
+  //       <img
+  //         src="https://www.svgrepo.com/show/509001/avatar-thinking-9.svg"
+  //         alt="Loading"
+  //         className="rounded-full h-28 w-28"
+  //       />
+  //     </div>
+  //   </div>
+  // }, 2000);
+
+
+
+  const sliderRef = useRef(null);
+
+  const scrollLeft = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: -200, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: 200, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
     dispatch(getProduct(""));
@@ -88,7 +136,7 @@ const AllProducts = () => {
   return (
     <>
       <Nav />
-      <div className='m-20'>
+      <div className='m-24'>
 
         <div>
 
@@ -118,49 +166,65 @@ const AllProducts = () => {
                   </div>
                 </div>
                 <h3 className="text-lg font-semibold mb-2"> {product.productName}</h3>
+                <Rating
+                  name="simple-uncontrolled"
+                  onChange={(event, newValue) => {
+                    console.log(newValue);
+                  }}
+                  defaultValue={2}
+                />
                 <p className="text-gray-800 font-medium mb-2">
                   ₹ {product.price}{' '} M.R.P: ₹
                   <span className="line-through text-gray-500">   {product.reducedMRP}</span>
                 </p>
-                <p className="text-gray-600 mb-4 font-semibold"> {product.description}</p>
+                {/* <p className="text-gray-600 mb-4 font-semibold"> {product.description}</p> */}
 
               </div>
             ))}
           </div>
         </div>
-        <div className="container shadow-md mx-auto p-2 mt-4">
-          <h2 className="text-2xl font-bold mb-4">Blockbuster deals with exchange</h2>
-          <div className="flex gap-6 scroll pb-3 h-100">
+
+        {/* // slider */}
+        <div className="relative w-full max-w-7xl bg-white p-2 mx-auto overflow-hidden">
+          {/* Left Scroll Button */}
+          <button
+            onClick={scrollLeft}
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-600 text-white p-3 rounded-md z-10"
+          >
+            <FaArrowLeft size={20} />
+          </button>
+
+          {/* Product Slider */}
+          <div
+            ref={sliderRef}
+            className="flex space-x-4 overflow-x-auto scroll-smooth p-4 scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-500 h-auto"
+          >
             {value.products
               ?.filter((product) => product.price <= 299)
               .map((product) => (
                 <div
                   key={product._id}
                   onClick={() => navigate(`onedata/${product._id}`)}
-                  className="bg-white shadow-md p-2 w-72 h-96 min-w-[300px] flex flex-col justify-between"
+                  className="bg-white shadow-md p-2 w-44 h-70 min-w-[220px] flex flex-col justify-between rounded-lg"
                 >
-                  <img
-                    src={`http://localhost:5000/${product.image[0]}`}
-                    alt={product.productName}
-                    className="w-full h-40 object-cover mb-4"
-                  />
-                  <div className="flex items-center mb-2">
-                    <div className="bg-red-600 text-white text-xs font-semibold py-1 px-2 rounded">
-                      {product.discount}% off
-                    </div>
-                    <div className="ml-2 text-red-600 text-sm font-bold">
-                      Great Indian Festival
-                    </div>
+                  <div className="w-52 h-60">
+                    <img
+                      src={`http://localhost:5000/${product.image[0]}`}
+                      className="w-full h-full rounded-lg object-cover"
+                      alt="Product"
+                    />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 truncate">{product.productName}</h3>
-                  <p className="text-gray-800 font-medium mb-2">
-                    ₹ {product.price} M.R.P: ₹
-                    <span className="line-through text-gray-500">{product.reducedMRP}</span>
-                  </p>
-                  <p className="text-gray-600 mb-4 font-semibold line-clamp-2">{product.description}</p>
                 </div>
               ))}
           </div>
+
+          {/* Right Scroll Button */}
+          <button
+            onClick={scrollRight}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-600 text-white p-3 rounded-md z-10"
+          >
+            <FaArrowRight size={20} />
+          </button>
         </div>
 
 
@@ -188,7 +252,7 @@ const AllProducts = () => {
                     {imagesOP.map((img, index) => (
                       <div
                         key={index}
-                        className='border border-2 p-1 rounded-md cursor-pointer'
+                        className=' border-2 p-1 rounded-md cursor-pointer'
                         onMouseOver={() => setMainImage(img)}
                       >
                         <img className='flex justify-center w-12' src={img} alt={`Thumbnail ${index}`} />
@@ -311,77 +375,68 @@ const AllProducts = () => {
         </div>
 
 
-
-        {/*  */}
+        {/* api all products in card form */}
         <div className="container mx-auto mt-5 mb-4 px-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {value.products
-          ?.filter((product) => product.price <= 299)
-          .map((product) => {
-            const currentHoveredImageIndex = hoveredImageIndex[product._id];
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {value.products
+              ?.filter((product) => product.price <= 299)
+              .map((product) => {
+                const hoveredIndex = hoveredImageIndex[product._id]; // Get hovered index
 
-            return (
-              <div
-                key={product._id}
-                className="bg-white shadow-md p-3 rounded-lg flex flex-col justify-between hover:shadow-lg transition duration-300"
-              >
-                <div
-                  onClick={() => navigate(`onedata/${product._id}`)}
-                  className="cursor-pointer"
-                >
-                  <h1 className="text-lg font-bold text-center mb-2">
-                    Explore more
-                  </h1>
-
-                  {/* Main Image */}
-                  <img
-                    src={`http://localhost:5000/${
-                      currentHoveredImageIndex !== null
-                        ? product.image[currentHoveredImageIndex] // Show hovered image if there is one
-                        : product.image[0] // Default to the first image if no hover
-                    }`}
-                    alt={product.productName}
-                    className="w-full h-40 object-cover rounded-md"
-                  />
-
-                  {/* Product Info */}
-                  <div className="text-center mt-2">
-                    <h2 className="text-sm text-gray-700">{product.productName}</h2>
-                    <p className="mt-1">
-                      <span className="text-lg font-bold">${product.price}</span>
-                      <span className="text-xs text-red-500 ml-2">
-                        {product.discount}% off
-                      </span>
-                    </p>
-                  </div>
-                </div>
-
-                {/* Thumbnail Images */}
-                <div className="flex justify-center gap-2 mt-3">
-                  {product.image.slice(0, 4).map((img, index) => (
+                return (
+                  <div
+                    key={product._id}
+                    className="bg-white shadow-md p-3 rounded-lg flex flex-col justify-between hover:shadow-lg transition duration-300"
+                  >
                     <div
-                      key={index}
-                      className={`border ${
-                        currentHoveredImageIndex === index
-                          ? "border-blue-500"
-                          : "border-gray-300"
-                      } rounded-md cursor-pointer p-1 transition duration-200`}
-                      onMouseEnter={() => handleMouseEnter(product._id, index)} // Set hovered image index for this product
-                      onMouseLeave={() => handleMouseLeave(product._id)} // Reset image index on mouse leave
+                      onClick={() => navigate(`onedata/${product._id}`)}
+                      className="cursor-pointer"
                     >
+                      <h1 className="text-lg font-bold text-center mb-2">
+                        Explore more
+                      </h1>
+
+                      {/* Main Image */}
                       <img
-                        src={`http://localhost:5000/${img}`}
-                        alt={`product_img_${index}`}
-                        className="w-16 h-16 object-cover rounded-md"
+                        src={`http://localhost:5000/${hoveredIndex !== undefined ? product.image[hoveredIndex] : product.image[0]}`}
+                        alt={product.productName}
+                        className="w-full h-40 object-cover rounded-md"
                       />
+
+                      {/* Product Info */}
+                      <div className="text-center mt-2">
+                        <h2 className="text-sm text-gray-700">{product.productName}</h2>
+                        <p className="mt-1">
+                          <span className="text-lg font-bold">${product.price}</span>
+                          <span className="text-xs text-red-500 ml-2">
+                            {product.discount}% off
+                          </span>
+                        </p>
+                      </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-      </div>
-    </div>
+
+                    {/* Thumbnail Images */}
+                    <div className="flex justify-center gap-2 mt-3">
+                      {product.image.slice(0, 4).map((img, index) => (
+                        <div
+                          key={index}
+                          className={`border ${hoveredIndex === index ? "border-blue-500" : "border-gray-300"} rounded-md cursor-pointer p-1 transition duration-200`}
+                          onMouseEnter={() => handleMouseEnter(product._id, index)}
+                          onMouseLeave={() => handleMouseLeave(product._id)}
+                        >
+                          <img
+                            src={`http://localhost:5000/${img}`}
+                            alt={`product_img_${index}`}
+                            className="w-16 h-16 object-cover rounded-md"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
 
 
 
