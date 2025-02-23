@@ -155,7 +155,7 @@ const AllProducts = () => {
                 <img
                   src={`http://localhost:5000/${product.image[0]}`}
                   alt={product.productName}
-                  className="w-full h-48 object-cover  mb-4"
+                  className="w-full h-48  mb-4 object-contain"
                 />
                 <div className="flex items-center">
                   <div className="bg-red-600 text-white text-xs font-semibold py-1 px-2 rounded">
@@ -189,7 +189,7 @@ const AllProducts = () => {
           {/* Left Scroll Button */}
           <button
             onClick={scrollLeft}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-600 text-white p-3 rounded-md z-10"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-100 h-24 w-11  shadow-md text-black p-3 rounded-md z-10"
           >
             <FaArrowLeft size={20} />
           </button>
@@ -221,11 +221,55 @@ const AllProducts = () => {
           {/* Right Scroll Button */}
           <button
             onClick={scrollRight}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-600 text-white p-3 rounded-md z-10"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-100 h-24 w-11  shadow-md text-black p-3 rounded-md z-10"
           >
             <FaArrowRight size={20} />
           </button>
         </div>
+
+        <div className="container rounded-sm shadow-md p-3 mt-4 m-5 w-auto">
+          <h2 className="text-2xl font-bold mb-4">Blockbuster deals On Watches</h2>
+          <div className="flex gap-6 scroll pb-3">
+            {value.products
+              ?.filter((product) => product.productCategoryName === "watches") // Filter products by category
+              .map((product) => (
+                <div
+                  key={product._id}
+                  onClick={() => navigate(`onedata/${product._id}`)}
+                  className="bg-white shadow-md p-2 w-72 h-[100%] min-w-[300px]"
+                >
+                  <img
+                    src={`http://localhost:5000/${product.image[0]}`}
+                    alt={product.productName}
+                    className="w-full h-48 mb-4 object-contain"
+                  />
+                  <div className="flex items-center">
+                    <div className="bg-red-600 text-white text-xs font-semibold py-1 px-2 rounded">
+                      {product.discount}% off
+                    </div>
+                    <div className="ml-2 text-red-600 text-sm font-bold">
+                      Great Indian Festival
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">{product.productName}</h3>
+                  <Rating
+                    name="simple-uncontrolled"
+                    onChange={(event, newValue) => {
+                      console.log(newValue);
+                    }}
+                    defaultValue={2}
+                  />
+                  <p className="text-gray-800 font-medium mb-2">
+                    ₹ {product.price} M.R.P: ₹
+                    <span className="line-through text-gray-500">
+                      {product.reducedMRP}
+                    </span>
+                  </p>
+                </div>
+              ))}
+          </div>
+        </div>
+
 
 
         <div className="container mt-3">
@@ -400,7 +444,7 @@ const AllProducts = () => {
                       <img
                         src={`http://localhost:5000/${hoveredIndex !== undefined ? product.image[hoveredIndex] : product.image[0]}`}
                         alt={product.productName}
-                        className="w-full h-40 object-cover rounded-md"
+                        className="w-full h-40 object-contain rounded-md"
                       />
 
                       {/* Product Info */}

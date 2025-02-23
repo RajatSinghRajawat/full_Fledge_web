@@ -27,7 +27,7 @@ router.get('/getProduct/:id', getProductID)
 router.get('/products/category/:Categories_id', getProductsByCategory);
 router.put("/updateProduct/:id", upload.array("files"), UpdateProduct)
 router.delete("/Deleteproduct/:id", DeleteProduct);
-router.get("/filterProduct", filterProduct)
+router.post("/filterProduct", filterProduct)
 
 //register
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Nav from "../../navigation/Nav";
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { getProduct } from "../../actions/productActions";
 import { useParams } from "react-router-dom";
@@ -15,6 +16,7 @@ const ProductsSearch = () => {
   const dispatch = useDispatch();
   const { keyword } = useParams(); // Get the search keyword from the URL
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
 
   const sliderRef = useRef(null);
@@ -39,7 +41,7 @@ const ProductsSearch = () => {
     'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg',
     'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg'
   ];
-
+  const [maxprice, setmaxprice] = useState()
 
   const filterProduct = async () => {
     try {
@@ -47,25 +49,32 @@ const ProductsSearch = () => {
       myHeaders.append("Content-Type", "application/json");
 
       const raw = JSON.stringify({
-        "minPrice": "500",
-        "maxPrice": ""
+        minPrice: 0, // Ensuring numeric value
+        maxPrice: maxprice // Ensure maxprice is defined before calling this function
       });
 
       const requestOptions = {
-        method: "GET",
+        method: "POST",
         headers: myHeaders,
         body: raw,
         redirect: "follow"
       };
 
-      fetch("http://localhost:5000/filterProduct", requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
-    } catch (error) {
+      const response = await fetch("http://localhost:5000/filterProduct", requestOptions);
+      const result = await response.json();
 
+      console.log(result);
+
+      if (result.success) { // Assuming success is a boolean
+        setProducts(result.products);
+      } else {
+        console.error("Error: ", result.message || "Failed to fetch products");
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
     }
-  }
+  };
+
 
 
   useEffect(() => {
@@ -126,24 +135,27 @@ const ProductsSearch = () => {
             <div className="flex items-center space-x-2">
               <span className="text-sm">₹57,900</span>
               <Box sx={{ width: 300 }}>
-            <Slider
-              getAriaLabel={() => 'Temperature range'}
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
-              getAriaValueText={valuetext}
-            />
-          </Box>
+                <Slider
+                  getAriaLabel={() => 'Temperature range'}
+                  value={value}
+                  onChange={handleChange}
+                  valueLabelDisplay="auto"
+                  getAriaValueText={valuetext}
+                />
+                <input type="text" style={{ border: '2px solid red' }} onChange={(e) => { setmaxprice(e.target.value) }} />
+                <button onClick={filterProduct}>onClick</button>
+              </Box>
               <span className="text-sm">₹1,21,100+</span>
             </div>
           </div>
-         
+
         </div>
         <div className="w-3/4 bg-white shadow-lg  rounded-lg p-6 animate-fadeIn">
           {products.length > 0 ? (
             <div className="">
               {products.map((product) => (
-                <div key={product.id} className="flex gap-6 shadow-sm p-2 mt-3">
+                <div key={product._id}
+                  onClick={() => navigate(`onedata/${product._id}`)} className="flex gap-6 shadow-sm p-2 mt-3">
                   <div className=" shadow-md p-4 w-[350px] h-[320px] flex items-center justify-center">
                     <img
                       className="w-full h-full object-contain transition-transform duration-300 hover:scale-105"

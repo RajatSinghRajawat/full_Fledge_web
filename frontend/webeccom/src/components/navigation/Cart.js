@@ -83,7 +83,7 @@ const Cart = () => {
                         <img
                             src={`http://localhost:5000/${p.productId.image[0]}`}
                             alt={p.productId.productName}
-                            className="w-12 h-12 object-cover rounded-md mr-4"
+                            className="w-12 h-12 object-contain rounded-md mr-4"
                         />
                         <div className="flex flex-1 flex-col">
                             <h2 className="text-lg font-semibold text-gray-800">

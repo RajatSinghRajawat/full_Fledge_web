@@ -92,9 +92,9 @@ const Register = () => {
           <div className="w-1/2 flex flex-col bg-white p-8">
             
             {/* Tab Buttons */}
-            <div className="flex justify-center gap-8 mb-6">
+            <div className="flex justify-center text-center gap-8 mb-6">
               <button
-                className={`text-lg font-semibold px-4 py-2 rounded-lg ${activeTab === "create" ? "text-white bg-teal-500" : "text-gray-500 bg-gray-200"}`}
+                className={`text-lg text-center font-semibold px-4 py-2 rounded-lg ${activeTab === "create" ? "text-white bg-teal-500" : "text-gray-500 bg-gray-200"}`}
                 onClick={() => setActiveTab("create")}
               >
                 Create Account
