@@ -555,8 +555,8 @@ const Product = () => {
                         }}
                       />
                     </div> */}
-                  <div className='h-96 border-rose-200'>
-                    <div className="w-full   relative z-[999999] ">
+                  <div className=' p-3 bg-sky-100  border-rose-200 flex justify-center align-middle '>
+                    <div className="w-full  relative ">
                       <ReactImageMagnify
                         {...{
                           smallImage: {

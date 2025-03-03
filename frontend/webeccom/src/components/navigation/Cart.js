@@ -71,7 +71,7 @@ const Cart = () => {
     }
 
     return (
-        <div className="p-6 bg-gray-100 min-h-screen">
+        <div className="p-6 bg-gray-100 min-h-screen z-[99999]">
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Your Cart</h1>
             {value.cart.Products.length > 0 ? (
                 value.cart.Products.map((p) => (

@@ -8,6 +8,7 @@ import Poster from '../Posters/Poster';
 import Allpros from './Allpros';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Rating } from '@mui/material';
+import productNotFound from "../img/dataNotFound.gif"
 
 
 const AllProducts = () => {
@@ -122,6 +123,23 @@ const AllProducts = () => {
     }
   };
 
+
+
+  const watchesSliderRef = useRef(null);
+
+  const handleScrollLeft = (ref) => {
+    if (ref.current) {
+      ref.current.scrollBy({ left: -200, behavior: "smooth" });
+    }
+  };
+
+  const handleScrollRight = (ref) => {
+    if (ref.current) {
+      ref.current.scrollBy({ left: 200, behavior: "smooth" });
+    }
+  };
+
+
   useEffect(() => {
     dispatch(getProduct(""));
   }, []);
@@ -136,12 +154,13 @@ const AllProducts = () => {
   return (
     <>
       <Nav />
-      <div className='m-24'>
+      <div className='m-20'>
 
         <div>
 
           <Poster />
         </div>
+
         <div className="container rounded-sm shadow-md  p-3 mt-4  m-5  w-auto">
           <h2 className="text-2xl font-bold mb-4">Blockbuster deals with exchange</h2>
           <div className=" flex gap-6  scroll pb-3"
@@ -183,49 +202,123 @@ const AllProducts = () => {
             ))}
           </div>
         </div>
-
-        {/* // slider */}
-        <div className="relative w-full max-w-7xl bg-white p-2 mx-auto overflow-hidden">
+        {/* slider 1 */}
+        <div className="relative w-full max-w-7xl bg-white p-2 mx-auto overflow-hidden h-72">
           {/* Left Scroll Button */}
           <button
             onClick={scrollLeft}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-100 h-24 w-11  shadow-md text-black p-3 rounded-md z-10"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-100 h-24 w-11 shadow-md text-black p-3 rounded-md z-10"
           >
             <FaArrowLeft size={20} />
           </button>
 
           {/* Product Slider */}
+          <h1 className="p-2 font-bold">
+            Related to items you've viewed,<span className="p-2 font-extrabold">In 299 Series</span>
+          </h1>
+
           <div
             ref={sliderRef}
-            className="flex space-x-4 overflow-x-auto scroll-smooth p-4 scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-500 h-auto"
+            className="flex space-x-4 overflow-x-auto scroll-smooth p-4 scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-500 h-full"
           >
-            {value.products
-              ?.filter((product) => product.price <= 299)
-              .map((product) => (
-                <div
-                  key={product._id}
-                  onClick={() => navigate(`onedata/${product._id}`)}
-                  className="bg-white shadow-md p-2 w-44 h-70 min-w-[220px] flex flex-col justify-between rounded-lg"
-                >
-                  <div className="w-52 h-60">
-                    <img
-                      src={`http://localhost:5000/${product.image[0]}`}
-                      className="w-full h-full rounded-lg object-cover"
-                      alt="Product"
-                    />
+            {value.products?.filter((product) => product.price <= 299).length > 0 ? (
+              value.products
+                ?.filter((product) => product.price <= 299)
+                .map((product) => (
+                  <div
+                    key={product._id}
+                    onClick={() => navigate(`onedata/${product._id}`)}
+                    className="bg-white shadow-md p-2 w-44 min-w-[220px] flex flex-col justify-between rounded-lg h-full"
+                  >
+                    <div className="w-52 h-60">
+                      <img
+                        src={`http://localhost:5000/${product.image[0]}`}
+                        className="w-full h-full rounded-lg object-cover"
+                        alt="Product"
+                      />
+                    </div>
                   </div>
+                ))
+            ) : (
+              <div className="w-full text-center text-gray-500 flex items-center justify-center h-full font-semibold">
+                <div>
+
+                  <img className="img-fluid h-44" src={productNotFound} alt="" />
+                  Product Not Found Connect to Network
+
                 </div>
-              ))}
+              </div>
+            )}
           </div>
 
           {/* Right Scroll Button */}
           <button
             onClick={scrollRight}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-100 h-24 w-11  shadow-md text-black p-3 rounded-md z-10"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-100 h-24 w-11 shadow-md text-black p-3 rounded-md z-10"
           >
             <FaArrowRight size={20} />
           </button>
         </div>
+
+        {/* slider 2 */}
+        <div className="relative w-full max-w-7xl mt-3 bg-white p-2 mx-auto overflow-hidden h-72">
+          {/* Left Scroll Button */}
+          <button
+            onClick={() => handleScrollLeft(watchesSliderRef)}
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-100 h-24 w-11 shadow-md text-black p-3 rounded-md z-10"
+          >
+            <FaArrowLeft size={20} />
+          </button>
+
+          {/* Product Slider */}
+          <h1 className="p-2 font-bold">
+            Related to items you've viewed,<span className="p-2 font-extrabold">SweatShirts</span>
+          </h1>
+
+          <div
+            ref={watchesSliderRef}
+            className="flex space-x-4 overflow-x-auto scroll-smooth p-4 scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-500 h-full"
+          >
+            {value.products?.filter((product) => product.productCategoryName === "sweetshirts").length > 0 ? (
+              value.products
+                ?.filter((product) => product.productCategoryName === "sweetshirts")
+                .map((product) => (
+                  <div
+                    key={product._id}
+                    onClick={() => navigate(`onedata/${product._id}`)}
+                    className="bg-white shadow-md p-2 w-44 min-w-[220px] flex flex-col justify-between rounded-lg h-full"
+                  >
+                    {/* Image Container (Ensures Image Stays Inside) */}
+                    <div className="w-52 h-full flex items-center justify-center overflow-hidden">
+                      <img
+                        src={`http://localhost:5000/${product.image[0]}`}
+                        className="w-full h-full rounded-lg object-contain"
+                        alt="Product"
+                      />
+                    </div>
+                  </div>
+                ))
+            ) : (
+              <div className="w-full text-center text-gray-500 flex items-center justify-center h-full font-semibold">
+                <div>
+
+                  <img className="img-fluid h-44" src={productNotFound} alt="" />
+                  Product Not Found Connect to Network
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Right Scroll Button */}
+          <button
+            onClick={() => handleScrollRight(watchesSliderRef)}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-100 h-24 w-11 shadow-md text-black p-3 rounded-md z-10"
+          >
+            <FaArrowRight size={20} />
+          </button>
+        </div>
+
+
 
         <div className="container rounded-sm shadow-md p-3 mt-4 m-5 w-auto">
           <h2 className="text-2xl font-bold mb-4">Blockbuster deals On Watches</h2>
@@ -598,106 +691,70 @@ const AllProducts = () => {
 
         </div>
 
+        <div className="flex justify-between">
 
-        {/* <Box
-        sx={{
-          display: 'flex',
-          gap: 3,
-          padding: 2,
-          overflowX: 'scroll', // Enable horizontal scrolling
-          flexWrap: 'nowrap', // Prevent wrapping
-          margin: '0 auto', // Center the container horizontally
-          minWidth: '300px',
-          '&::-webkit-scrollbar': {
-            height: '8px', // Adjust the height of the scrollbar
-          },
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: '#888', // Customize the scrollbar color
-            borderRadius: '10px', // Rounded corners for the scrollbar
-          },
-          '&::-webkit-scrollbar-thumb:hover': {
-            backgroundColor: '#555', // Change color on hover
-          },
-          '&::-webkit-scrollbar-track': {
-            backgroundColor: '#f1f1f1', // Background color of the scrollbar track
-          },
-        }}
-      >
-        {value.products?.map((product, index) => (
-          <Card
-            key={product._id}
-            onClick={() => navigate(`onedata/${product._id}`)}
-            className="relative rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-            sx={{
-              minWidth: '290px', // Fixed minimum width for each card
-              maxWidth: '345px', // Optional: Limit the maximum width of each card
-              flex: '1 0 auto', // Allow the card to take its minimum width and grow
-            }}
-          >
-            <CardMedia
-              component="img"
-              height="240"
-              image={`http://localhost:5000/Uploads/${product.image[0]}`} // Display the first image in the array
-              alt={product.productName}
-              sx={{
-                objectFit: 'contain',
-                height: '240px',
-                width: '100%',
-              }}
-            />
+          <div className=' m-5  bg-white rounded-md shadow-lg w-[600px] h-72'>
+            <img src="https://images.moneycontrol.com/static-mcnews/2025/01/20250117063542_Chhava.jpg?impolicy=website&width=770&height=431" alt="" />
+          </div>
+          <div className=' m-5 p-3 bg-white rounded-md shadow-lg w-[300px] h-auto'>
+            <h1 className='text-bold text-lg font-bold'>Explore more </h1>
+            <div className=" p-2 flex flex-col justify-center">
+              <img className='flex justify-center w-[300px] h-[150px] object-contain' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+              <div className='leading-tight'>
+                <h1 className='text-sm text-grey pt-3'>AFROJACK Men's Chelsea Ankle Boots</h1>
+                <p className='mt-1'><span className='text-lg font-bold'>₹999</span><span className='text-xs ps-2 pb-2 pt-2'>M.R.P.: ₹6,495</span></p>
 
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 8,
-                left: 8,
-                backgroundColor: 'red',
-                color: 'white',
-                fontWeight: 'bold',
-                padding: '2px 8px',
-                borderRadius: 1,
-              }}
-            >
-              {product.discount}% off
-            </Box>
+              </div>
+              <div className='flex justify-around mt-2'>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+                <div className='border border-2 p-1 rounded-md'>
+                  <img className='flex justify-center w-12' src="https://m.media-amazon.com/images/I/51CRDDG6s4L._AC_SY175_.jpg" alt="" />
+                </div>
+              </div>
 
-            <CardContent>
-              <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-                {product.productName}
-              </Typography>
+            </div>
+          </div>
 
-              <Typography variant="body2" color="text.secondary" sx={{ marginY: 1 }}>
-                {product.description}
-              </Typography>
 
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Typography variant="h5" color="text.primary" sx={{ fontWeight: 'bold' }}>
-                  ₹{product.price}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ textDecoration: 'line-through' }}>
-                  M.R.P: ₹{product.reducedMRP}
-                </Typography>
-              </Box>
 
-              <Typography
-                variant="caption"
-                sx={{ backgroundColor: 'red.100', color: 'red.800', padding: '4px 8px', borderRadius: 1 }}
-              >
-                Great Indian Festival
-              </Typography>
+          <div className='  p-3 bg-white rounded-md shadow-lg w-[350px] h-auto'>
+            <div className='flex justify-between p-3'>
+              <div>
+                <img className='h-[100px]' src="https://m.media-amazon.com/images/I/31U7DsTXDxL._MCnd_AC_.jpg" alt="" />
+                <h6 className='text-base font-bold'>Sweatshirt for Men</h6>
+              </div>
+              <div>
+                <img className='h-[100px]' src="https://m.media-amazon.com/images/I/41IZrCXfsSL._MCnd_AC_.jpg" alt="" />
+                <h6 className='text-base font-bold'>Sweatshirt for Men</h6>
 
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-                <Button variant="contained" color="primary">
-                  Buy Now
-                </Button>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon color="error" />
-                </IconButton>
-              </Box>
-            </CardContent>
-          </Card>
-        ))}
-      </Box> */}
+              </div>
+            </div>
+            <div className='flex justify-between p-3 pt-2'>
+              <div>
+                <img className='h-[100px]' src="https://m.media-amazon.com/images/I/31ztpzzaDSL._MCnd_AC_.jpg" alt="" />
+                <h6 className='text-base font-bold'>Sweatshirt for Men</h6>
+
+              </div>
+              <div>
+                <img className='h-[100px] bg-slate-400  text-center' src="https://m.media-amazon.com/images/I/41SwyubT5sL._MCnd_AC_.jpg" alt="" />
+                <h6 className='text-base font-bold'>Sweatshirt for Men</h6>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+
         {/* <Allpros/> */}
         {/* <ProductSection /> */}
       </div>

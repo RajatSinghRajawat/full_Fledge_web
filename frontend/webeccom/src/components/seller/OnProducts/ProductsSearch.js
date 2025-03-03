@@ -19,23 +19,13 @@ const ProductsSearch = () => {
   const navigate = useNavigate();
 
 
-  const sliderRef = useRef(null);
 
-  const scrollLeft = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: -200, behavior: "smooth" });
-    }
-  };
   const [value, setValue] = React.useState([20, 37]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const scrollRight = () => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollBy({ left: 200, behavior: "smooth" });
-    }
-  };
+ 
 
   const images = [
     'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg', 'https://m.media-amazon.com/images/I/71h75BcHSdL._AC_SY200_.jpg',
@@ -95,7 +85,7 @@ const ProductsSearch = () => {
       <div className="container mx-auto p-6 flex gap-6">
 
 
-        <div className="w-1/4 bg-white shadow-lg rounded-lg p-4 animate-fadeIn">
+        <div className="w-1/4 bg-white h-[100%] shadow-lg rounded-lg p-4 animate-fadeIn">
           <h1 className="text-xl font-bold mb-4">Filters</h1>
 
           {/* Delivery Day */}
@@ -142,8 +132,10 @@ const ProductsSearch = () => {
                   valueLabelDisplay="auto"
                   getAriaValueText={valuetext}
                 />
-                <input type="text" style={{ border: '2px solid red' }} onChange={(e) => { setmaxprice(e.target.value) }} />
-                <button onClick={filterProduct}>onClick</button>
+                {/* <input type="text"  onChange={(e) => { setmaxprice(e.target.value) }} /> */}
+                <input type="text" onChange={(e) => { setmaxprice(e.target.value) }} class="form-control" placeholder="Filter Products With Price" aria-label="Username"/>
+
+                <button className="btn btn-primary w-36 mt-3" onClick={filterProduct}>Filter</button>
               </Box>
               <span className="text-sm">₹1,21,100+</span>
             </div>
@@ -194,34 +186,6 @@ const ProductsSearch = () => {
 
       </div>
 
-      <div className="relative w-full max-w-6xl mx-auto overflow-hidden">
-        <button onClick={scrollLeft} className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-600 text-white p-3 rounded-md z-10">
-          <FaArrowLeft size={20} />
-        </button>
-        <div ref={sliderRef} className="flex space-x-4 overflow-x-auto scroll-smooth p-4 scrollbar-thin scrollbar-track-gray-200 scrollbar-thumb-gray-500 scrollbar-w-400">
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-          <img src="https://m.media-amazon.com/images/I/51tTsA+tBuL._AC_SY200_.jpg" className="w-60 h-auto rounded-lg object-cover" alt="" />
-        </div>
-        <button onClick={scrollRight} className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-600 text-white p-3 rounded-md z-10">
-          <FaArrowRight size={20} />
-        </button>
-      </div>
 
     </div>
   );

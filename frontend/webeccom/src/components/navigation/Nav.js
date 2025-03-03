@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../actions/productActions';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -14,10 +14,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Cart from './Cart';
 import logo2 from '../navigation/logo2.png';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActionArea from '@mui/material/CardActionArea';
-import CardActions from '@mui/material/CardActions';
+import { FaFilter } from 'react-icons/fa';
+
 
 const Nav = () => {
   const myRef = useRef(null);
@@ -38,13 +36,11 @@ const Nav = () => {
   };
 
   const changeValue = (e) => {
-    // dispatch2(getProduct(e.target.value));
-    // console.log("rajawat saab", dispatch2(getProduct(e.target.value)));
-
-    console.log("innnn")
     
-    if(e.key == "Enter"){
-      if(e.target.value == ""){
+    console.log("innnn")
+
+    if (e.key == "Enter") {
+      if (e.target.value == "") {
         return;
       }
 
@@ -53,6 +49,19 @@ const Nav = () => {
 
     // console.log(e.target.value);
   };
+
+
+  const dispatch = useDispatch()
+
+  const { value } = useSelector((state) => {
+
+ 
+    return state.MYproduct
+  })
+
+  // console.log("valueAAAAAAAAAAAAAAAAAAaa", value.products.Filter((p)=>p.productCategoryName="shoes"))
+
+
 
   const VisuallyHiddenInput = styled('input')`
     clip: rect(0 0 0 0);
@@ -123,7 +132,10 @@ const Nav = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  
+
+  useEffect(() => {
+    dispatch(getProduct(""));
+  }, []);
 
   useEffect(() => {
     myRef.current.addEventListener('keypress', changeValue);
@@ -145,9 +157,16 @@ const Nav = () => {
 
           <div className="hidden lg:flex items-center mx-auto w-full lg:w-1/2 space-x-2">
             <div className="relative inline-block">
-              <button className="bg-gray-800 text-white px-4 py-2 rounded-l-md">
+              {/* <button className="bg-gray-800 text-white px-4 py-2 rounded-l-md">
                 Electronics
-              </button>
+              </button> */}
+
+              <select className="form-select w-40" aria-label="Default select example">
+                <option selected>Categories</option>
+                <option  value="1">Hoodie</option>
+                <option value="2">Shoes</option>
+                <option value="3">Three</option>
+              </select>
               <ul className="absolute hidden text-gray-700 pt-1">
                 <li className="bg-gray-200 hover:bg-gray-400 px-4 py-2"><a href="#/action-1">Books</a></li>
                 <li className="bg-gray-200 hover:bg-gray-400 px-4 py-2"><a href="#/action-2">Clothes</a></li>
@@ -157,7 +176,7 @@ const Nav = () => {
             <input
               ref={myRef}
               // type="search"
-              placeholder="Search Amazon.in"
+              placeholder="Search EcomZone.in"
               className="w-full p-2 border border-gray-300 focus:outline-none text-black"
             />
 
@@ -239,7 +258,7 @@ const Nav = () => {
         </div>
 
         {/* Cart Offcanvas */}
-        <Offcanvas style={{ width: "500px" }} show={showCart} onHide={handleCartToggle}>
+        <Offcanvas style={{ width: "500px", zIndex: "999999" }} show={showCart} onHide={handleCartToggle}>
           <Offcanvas.Header closeButton>
             <Offcanvas.Title>Cart Items</Offcanvas.Title>
           </Offcanvas.Header>
@@ -249,7 +268,6 @@ const Nav = () => {
         </Offcanvas>
       </div>
 
-      {/* Categories Component */}
       <Categories />
 
 
