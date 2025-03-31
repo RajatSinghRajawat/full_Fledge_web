@@ -32,17 +32,26 @@ const Register = () => {
 
     try {
       const payload = { name, email, password };
-      await axios.post("http://localhost:5000/signUpUser", payload);
+      const response = await axios.post("http://localhost:5000/signUpUser", payload);
+      console.log(JSON.stringify(response.data.user), "sdjjjjjjjjjjjjjjjkregister");
+      localStorage.setItem("userData", JSON.stringify(response.data.user));
 
-      toast.success("Account created successfully! Please log in.");
-      
-      setTimeout(() => setActiveTab("login"), 1500); // Switch to login after 1.5s
+      if (response?.data?.token) {
+        localStorage.setItem("token", response.data.token);
+        toast.success("Account created successfully!");
+
+        setTimeout(() => navigate("/"), 1500); // Dashboard pe redirect
+      } else {
+        toast.success("Account created successfully! Please log in.");
+        setTimeout(() => setActiveTab("login"), 1500);
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong!");
     } finally {
       setIsLoading(false);
     }
   };
+
 
   const login = async (e) => {
     e.preventDefault();
@@ -57,6 +66,8 @@ const Register = () => {
     try {
       const payload = { email, password };
       const response = await axios.post("http://localhost:5000/LogInUser", payload);
+      console.log(response, "sdjjjjjjjjjjjjjjjkregister");
+      localStorage.setItem("userData", JSON.stringify(response.data.user));
 
       if (response?.data?.token) {
         localStorage.setItem("token", response.data.token);
@@ -76,7 +87,7 @@ const Register = () => {
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="flex justify-center items-center h-screen bg-gray-100">
         <div className="flex max-w-7xl w-full h-5/6 rounded-lg overflow-hidden shadow-lg">
-          
+
           {/* Left Section */}
           <div className="w-1/2 pt-5 bg-teal-200 flex flex-col justify-center items-center p-8">
             <h1 className="text-4xl font-bold text-gray-800 mb-4 text-center">
@@ -90,7 +101,7 @@ const Register = () => {
 
           {/* Right Section */}
           <div className="w-1/2 flex flex-col bg-white p-8">
-            
+
             {/* Tab Buttons */}
             <div className="flex justify-center text-center gap-8 mb-6">
               <button
@@ -110,7 +121,7 @@ const Register = () => {
             {activeTab === "create" ? (
               <div>
                 <h2 className="text-3xl font-semibold text-gray-800 mb-4">Create Account</h2>
-                
+
                 <form onSubmit={register} className="flex flex-col gap-4 w-3/4 mx-auto">
                   <div className="flex items-center gap-2 border-b border-gray-300 pb-2">
                     <MdOutlineAccountCircle size={20} className="text-gray-400" />
